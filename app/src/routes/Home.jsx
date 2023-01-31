@@ -29,11 +29,6 @@ export const Home = (props) => {
     setIsLoggedIn(false);
   }
 
-
-
-
-
-  //const [update, setUpate] = useState(true)
   //Sends a fetch to get all of a users projects/classes from asana
   useEffect(() => {
 
