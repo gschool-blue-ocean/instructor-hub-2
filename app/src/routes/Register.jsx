@@ -12,7 +12,7 @@ import { eye } from "react-icons-kit/feather/eye";
 import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import InputGroup from "react-bootstrap/InputGroup";
 
-const URL = "http://localhost:8000/api";
+const URL = "http://localhost:7000/api";
 
 export const Register = () => {
   //State to see if account was created, if it was it sends user back to login

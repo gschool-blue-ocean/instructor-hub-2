@@ -2,7 +2,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon -r dotenv/config express.js",
-    "start": "node -r dotenv/config express.js"
+    "start": "node -r dotenv/config express.js",
+    "authStart": "node authServer.js"
   },
   "dependencies": {
     "@supercharge/strings": "^1.29.1",

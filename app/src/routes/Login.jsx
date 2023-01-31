@@ -13,7 +13,7 @@ import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import InputGroup from "react-bootstrap/InputGroup";
 
 export const Login = (props) => {
-  const URL = "http://localhost:8000/api";
+  const URL = "http://localhost:7000/api";
 
   const { isLoggedIn, setIsLoggedIn } = props;
   const emailRef = useRef();
