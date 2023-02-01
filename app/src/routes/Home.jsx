@@ -64,7 +64,7 @@ export const Home = (props) => {
 
 
     
-  }, [courses]);
+  }, []);
 
 
 
@@ -85,10 +85,6 @@ export const Home = (props) => {
       })
       .then(setIsLoadingCourses(false));
   }
-
-
-
-
 
 //   const [courses, setCourses] = useState([]);
 // const [isLoading, setIsLoading] = useState(true);
