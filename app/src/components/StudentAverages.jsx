@@ -12,17 +12,58 @@ ChartJS.register(CategoryScale, LinearScale, BarElement);
 export const StudentAverages = (props) => {
   const {
     students,
-    learnAvg,
+    dveAvg,
+    loopsAvg,
+    functionsAvg,
     arraysAvg,
-    objAvg,
+    objectsAvg,
     domApiAvg,
-    ssAvg,
-    sDbAvg,
+    serverAvg,
+    databaseAvg,
     reactAvg,
-    teamworkAvg,
-    techAvg,
   } = props;
+  let gradedDveAvg = [];
+  let gradedLoopAvg = [];
+  let gradedFunAvg = [];
+  let gradedArraysAvg = [];
+  let gradedObjAvg = [];
+  let gradedDomApiAvg = [];
+  let gradedServerAvg = [];
+  let gradedDatabaseAvg = [];
+  let gradedReactAvg = [];
+  for (let i = 0; i < students.length; i++) {
+    console.log(students[i]);
+    if (students[i].dve > 0) {
+      gradedDveAvg.push(students[i]);
+    }
+    if (students[i].loops > 0) {
+      gradedLoopAvg.push(students[i]);
+    }
+    if (students[i].functions > 0) {
+      gradedFunAvg.push(students[i]);
+    }
+    if (students[i].arrays > 0) {
+      gradedArraysAvg.push(students[i]);
+    }
+    if (students[i].objects > 0) {
+      gradedObjAvg.push(students[i]);
+    }
+    if (students[i].dom_api > 0) {
+      gradedDomApiAvg.push(students[i]);
+    }
+    if (students[i].server_side > 0) {
+      gradedServerAvg.push(students[i]);
+    }
+    if (students[i].server_database > 0) {
+      gradedDatabaseAvg.push(students[i]);
+    }
+    if (students[i].react > 0) {
+      gradedReactAvg.push(students[i]);
+    }
+  }
 
+  console.log(students);
+  console.log(gradedLoopAvg);
   var data = {
     labels: [
       "DVE",
@@ -39,15 +80,15 @@ export const StudentAverages = (props) => {
       {
         label: "Cohort Avg",
         data: [
-          Math.floor(learnAvg / students.length),
-          Math.floor(teamworkAvg / students.length),
-          Math.floor(techAvg / students.length),
-          Math.floor(arraysAvg / students.length),
-          Math.floor(objAvg / students.length),
-          Math.floor(domApiAvg / students.length),
-          Math.floor(ssAvg / students.length),
-          Math.floor(sDbAvg / students.length),
-          Math.floor(reactAvg / students.length),
+          Math.floor(dveAvg / gradedDveAvg.length),
+          Math.floor(loopsAvg / gradedLoopAvg.length),
+          Math.floor(functionsAvg / gradedFunAvg.length),
+          Math.floor(arraysAvg / gradedArraysAvg.length),
+          Math.floor(objectsAvg / gradedObjAvg.length),
+          Math.floor(domApiAvg / gradedDomApiAvg.length),
+          Math.floor(serverAvg / gradedServerAvg.length),
+          Math.floor(databaseAvg / gradedDatabaseAvg.length),
+          Math.floor(reactAvg / gradedReactAvg.length),
         ],
         backgroundColor: [
           "rgb(237, 119, 28, 0.4)",

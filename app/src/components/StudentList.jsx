@@ -21,15 +21,16 @@ export const StudentList = (props) => {
   const [students, setStudents] = useState([]);
   //dve avg
   const [learnAvg, setLearnAvg] = useState(0);
+  const [dveAvg, setDveAvg] = useState(0);
   //loops avg
-  const [teamworkAvg, setTeamworkAvg] = useState(0);
+  const [loopsAvg, setLoopsAvg] = useState(0);
   //functions avg
-  const [techAvg, setTechAvg] = useState(0);
+  const [functionsAvg, setFunctionsAvg] = useState(0);
   const [arraysAvg, setArraysAvg] = useState(0);
-  const [objAvg, setObjAvg] = useState(0);
+  const [objectsAvg, setObjectsAvg] = useState(0);
   const [domApiAvg, setDomApiAvg] = useState(0);
-  const [ssAvg, setSsAvg] = useState(0);
-  const [sDbAvg, setSDbAvg] = useState(0);
+  const [serverAvg, setServerAvg] = useState(0);
+  const [databaseAvg, setDatabaseAvg] = useState(0);
   const [reactAvg, setReactAvg] = useState(0);
   // state for Student Info Modal displaying/not displaying
   const [showStudentInfoModal, setShowStudentInfoModal] = useState(false);
@@ -68,17 +69,22 @@ export const StudentList = (props) => {
       .then(() => {
         setLearnAvg(
           students
+            .map((student) => student.learn_avg)
+            .reduce((acc, score) => acc + score, 0)
+        );
+        setDveAvg(
+          students
             .map((student) => student.dve)
             .reduce((acc, score) => acc + score, 0)
         );
-        setTeamworkAvg(
+        setLoopsAvg(
           students
             .map((student) => student.loops)
             .reduce((acc, score) => acc + score, 0)
         );
-        setTechAvg(
+        setFunctionsAvg(
           students
-            .map((student) => student.fun)
+            .map((student) => student.functions)
             .reduce((acc, score) => acc + score, 0)
         );
         setArraysAvg(
@@ -86,9 +92,9 @@ export const StudentList = (props) => {
             .map((student) => student.arrays)
             .reduce((acc, score) => acc + score, 0)
         );
-        setObjAvg(
+        setObjectsAvg(
           students
-            .map((student) => student.obj)
+            .map((student) => student.objects)
             .reduce((acc, score) => acc + score, 0)
         );
         setDomApiAvg(
@@ -96,14 +102,14 @@ export const StudentList = (props) => {
             .map((student) => student.dom_api)
             .reduce((acc, score) => acc + score, 0)
         );
-        setSsAvg(
+        setServerAvg(
           students
-            .map((student) => student.ss)
+            .map((student) => student.server_side)
             .reduce((acc, score) => acc + score, 0)
         );
-        setSDbAvg(
+        setDatabaseAvg(
           students
-            .map((student) => student.s_db)
+            .map((student) => student.server_database)
             .reduce((acc, score) => acc + score, 0)
         );
         setReactAvg(
@@ -115,6 +121,7 @@ export const StudentList = (props) => {
   }, [courses]);
 
   //Does a fetch when student is clicked to get their grades from projects
+  //Only applies the data to be shown with the student_id that has been clicked
   function getGrades(id) {
     fetch(`${url}/api/student/scores/${id}`)
       .then((result) => result.json())
@@ -213,14 +220,15 @@ export const StudentList = (props) => {
         <StudentAverages
           students={students}
           learnAvg={learnAvg}
+          dveAvg={dveAvg}
+          loopsAvg={loopsAvg}
+          functionsAvg={functionsAvg}
           arraysAvg={arraysAvg}
-          objAvg={objAvg}
+          objectsAvg={objectsAvg}
           domApiAvg={domApiAvg}
-          ssAvg={ssAvg}
-          sDbAvg={sDbAvg}
+          serverAvg={serverAvg}
+          databaseAvg={databaseAvg}
           reactAvg={reactAvg}
-          teamworkAvg={teamworkAvg}
-          techAvg={techAvg}
         />
         <GenerateGroupsModal students={students} />
         <StudentInfoModal
