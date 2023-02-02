@@ -197,6 +197,7 @@ app.post('/image' , upload.single('image') , async (req, res) =>{
     console.log(file)
     const result=await uploadFile(file)
     await unlinkFile(file.path)
+    //used to delete a file located at the file system path specified in the file.path argument(in uploads folder).
     console.log(result)
     res.send({imagePath:`/image/${result.Key}`})
 })
@@ -205,7 +206,8 @@ app.get('/image/:key',(req,res) =>{
     const key = req.params.key
     const readStream= getFileStream(key)
     readStream.pipe(res)
-
+//The pipe method is a method on a Node.js stream that automatically handles the flow of data between two streams, in this case from the "readStream" to the "res" object.
+//The data is automatically read from the source stream (readStream) and written to the destination stream (res) in a buffered manner, which helps to minimize the memory usage and allow for more efficient handling of large files.
 })
 app.get('/images/:email',(req,res) =>{
     let email = req.params.email
