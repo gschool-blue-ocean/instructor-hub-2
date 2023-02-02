@@ -12,36 +12,35 @@ ChartJS.register(CategoryScale, LinearScale, BarElement);
 export const StudentAverages = (props) => {
   const {
     students,
-    learnAvg,
+    dveAvg,
+    loopsAvg,
+    functionsAvg,
     arraysAvg,
-    objAvg,
+    objectsAvg,
     domApiAvg,
-    ssAvg,
-    sDbAvg,
+    serverAvg,
+    databaseAvg,
     reactAvg,
-    teamworkAvg,
-    techAvg,
   } = props;
 
-  let gradedLearnAvg = [];
+  let gradedDveAvg = [];
   for (let i = 0; i < students.length; i++) {
     if (students[i].dve !== null) {
-      gradedLearnAvg.push(students[i]);
+      gradedDveAvg.push(students[i]);
     }
   }
 
-  let gradedTeamworkAvg = [];
+  let gradedLoopsAvg = [];
   for (let i = 0; i < students.length; i++) {
     if (students[i].loops !== null) {
-      gradedTeamworkAvg.push(students[i]);
+      gradedLoopsAvg.push(students[i]);
     }
   }
-  console.log(gradedTeamworkAvg);
 
-  let gradedTechAvg = [];
+  let gradedFunctionsAvg = [];
   for (let i = 0; i < students.length; i++) {
     if (students[i].fun !== null) {
-      gradedTechAvg.push(students[i]);
+      gradedFunctionsAvg.push(students[i]);
     }
   }
 
@@ -52,10 +51,10 @@ export const StudentAverages = (props) => {
     }
   }
 
-  let gradedObjAvg = [];
+  let gradedObjectsAvg = [];
   for (let i = 0; i < students.length; i++) {
     if (students[i].obj !== null) {
-      gradedObjAvg.push(students[i]);
+      gradedObjectsAvg.push(students[i]);
     }
   }
 
@@ -66,17 +65,17 @@ export const StudentAverages = (props) => {
     }
   }
 
-  let gradedSsAvg = [];
+  let gradedServerAvg = [];
   for (let i = 0; i < students.length; i++) {
     if (students[i].ss !== null) {
-      gradedSsAvg.push(students[i]);
+      gradedServerAvg.push(students[i]);
     }
   }
 
-  let gradedSDbAvg = [];
+  let gradedDatabaseAvg = [];
   for (let i = 0; i < students.length; i++) {
     if (students[i].s_db !== null) {
-      gradedSDbAvg.push(students[i]);
+      gradedDatabaseAvg.push(students[i]);
     }
   }
 
@@ -103,14 +102,14 @@ export const StudentAverages = (props) => {
       {
         label: "Cohort Avg",
         data: [
-          Math.floor(learnAvg / gradedLearnAvg.length),
-          Math.floor(teamworkAvg / gradedTeamworkAvg.length),
-          Math.floor(techAvg / gradedTechAvg.length),
+          Math.floor(dveAvg / gradedDveAvg.length),
+          Math.floor(loopsAvg / gradedLoopsAvg.length),
+          Math.floor(functionsAvg / gradedFunctionsAvg.length),
           Math.floor(arraysAvg / gradedArraysAvg.length),
-          Math.floor(objAvg / gradedObjAvg.length),
+          Math.floor(objectsAvg / gradedObjectsAvg.length),
           Math.floor(domApiAvg / gradedDomApiAvg.length),
-          Math.floor(ssAvg / gradedSsAvg.length),
-          Math.floor(sDbAvg / gradedSDbAvg.length),
+          Math.floor(serverAvg / gradedServerAvg.length),
+          Math.floor(databaseAvg / gradedDatabaseAvg.length),
           Math.floor(reactAvg / gradedReact.length),
         ],
         backgroundColor: [
