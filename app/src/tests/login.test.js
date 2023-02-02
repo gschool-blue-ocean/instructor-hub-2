@@ -18,7 +18,7 @@ async function test_case_login() {
 
   await driver
     .findElement(By.xpath("(//input[@class='form-control'])[2]"))
-    .sendKeys("password23", Key.RETURN);
+    .sendKeys("password123", Key.RETURN);
   logger.info("Loged in the page");
 
   async function example() {
