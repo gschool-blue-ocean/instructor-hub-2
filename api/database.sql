@@ -23,10 +23,6 @@ DROP TABLE IF EXISTS pairs CASCADE;
 
 DROP FUNCTION IF EXISTS calc_projavg() CASCADE;
 
--- DROP TRIGGER IF EXISTS project ON project_grades CASCADE;
--- DROP TRIGGER IF EXISTS cohortavg ON students CASCADE;
--- DROP TRIGGER IF EXISTS trig_student_copy on students CASCADE;
--- DROP TRIGGER IF EXISTS trig_cohort_copy ON cohorts CASCADE;
 DROP EXTENSION IF EXISTS pgcrypto;
 
 CREATE EXTENSION pgcrypto;
@@ -72,17 +68,13 @@ CREATE TABLE cohorts (
   cohort_name TEXT UNIQUE PRIMARY KEY,
   begin_date DATE,
   end_date DATE,
-  instructor TEXT,
-  cohort_avg INT,
-  cohort_min INT,
-  cohort_max INT
+  instructor TEXT
 );
 
 -- fun is short for functions, ss stands for server side and s_db stands for server database
 CREATE TABLE students (
   student_id SERIAL PRIMARY KEY,
   name TEXT,
-  assessment_student_avg INT,
   learn_avg INT,
   dve INT,
   loops INT,

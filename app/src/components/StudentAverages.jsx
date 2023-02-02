@@ -22,7 +22,8 @@ export const StudentAverages = (props) => {
     databaseAvg,
     reactAvg,
   } = props;
-
+  // Each assessment has its own array so that the only grades that are graphed will be
+  // the students that have an assessment that has been graded
   let gradedDveAvg = [];
   for (let i = 0; i < students.length; i++) {
     if (students[i].dve !== null) {

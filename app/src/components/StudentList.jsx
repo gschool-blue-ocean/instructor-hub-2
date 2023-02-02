@@ -19,6 +19,7 @@ export const StudentList = (props) => {
 
   const [selectedClass, setSelectedClass] = useState("Cohorts");
   const [students, setStudents] = useState([]);
+  const [learnAvg, setLearnAvg] = useState(0);
   const [dveAvg, setDveAvg] = useState(0);
   const [loopsAvg, setLoopsAvg] = useState(0);
   const [functionsAvg, setFunctionsAvg] = useState(0);
@@ -71,6 +72,11 @@ export const StudentList = (props) => {
         setStudents(data);
       })
       .then(() => {
+        setLearnAvg(
+          students
+            .map((student) => student.learn_avg)
+            .reduce((acc, score) => acc + score, 0)
+        );
         setDveAvg(
           students
             .map((student) => student.dve)
@@ -120,6 +126,7 @@ export const StudentList = (props) => {
   }, [courses]);
 
   //Does a fetch when student is clicked to get their grades from projects
+  //For loop isolates the data to be rendered by the student_id
   function getGrades(id) {
     fetch(`${url}/api/student/scores/${id}`, {
       headers: {
@@ -165,23 +172,8 @@ export const StudentList = (props) => {
             setSelectedClass(evt);
             sessionStorage.setItem("currentClass", evt);
             loadStudents(evt);
-            setSelectedClass(evt);
-            sessionStorage.setItem("currentClass", evt);
-            loadStudents(evt);
           }}
         >
-          {isLoadingCourses ? (
-            <LoadingDropdown />
-          ) : (
-            courses.map((course) => (
-              <Dropdown.Item
-                key={course.cohort_id}
-                eventKey={course.cohort_name}
-              >
-                {course.cohort_name}
-              </Dropdown.Item>
-            ))
-          )}
           {isLoadingCourses ? (
             <LoadingDropdown />
           ) : (
@@ -220,36 +212,19 @@ export const StudentList = (props) => {
                   >
                     {student.name}
                   </td>
-                  {students.map((student) => (
-                    <tr key={student.student_id}>
-                      <td
-                        id="student-name"
-                        value={student.student_id}
-                        onClick={(e) => {
-                          getLearnGrades(student.student_id);
-                          getGrades(student.student_id);
-                          handleShowStudentInfoModal(student.name);
-                        }}
-                      >
-                        {student.name}
-                      </td>
-                      <td>{student.github}</td>
-                      <td className="student-average" width={"15%"}>
-                        <ButtonGroup aria-label="Basic example">
-                          <Button variant="secondary" size="sm">
-                            <Badge
-                              bg={student.learn_avg < 70 ? "danger" : "success"}
-                            >
-                              {student.learn_avg || "--"}%
-                            </Badge>
-                            <span className="visually-hidden">
-                              unread messages
-                            </span>
-                          </Button>
-                        </ButtonGroup>
-                      </td>
-                    </tr>
-                  ))}
+                  <td>{student.github}</td>
+                  <td className="student-average" width={"15%"}>
+                    <ButtonGroup aria-label="Basic example">
+                      <Button variant="secondary" size="sm">
+                        <Badge
+                          bg={student.learn_avg < 70 ? "danger" : "success"}
+                        >
+                          {student.learn_avg || "--"}%
+                        </Badge>
+                        <span className="visually-hidden">unread messages</span>
+                      </Button>
+                    </ButtonGroup>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -257,6 +232,7 @@ export const StudentList = (props) => {
         </div>
         <StudentAverages
           students={students}
+          learnAvg={learnAvg}
           dveAvg={dveAvg}
           loopsAvg={loopsAvg}
           functionsAvg={functionsAvg}
