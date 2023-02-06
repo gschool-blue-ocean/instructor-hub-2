@@ -1,24 +1,28 @@
-//Sets up requires that the server needs
-const express = require("express");
+//Sets up requires that the server needschAvg
+const express = require('express');
 const app = express();
+
 const cors = require('cors');
 require('dotenv').config();
-const multer  = require('multer')
+
+const multer = require('multer');
 const upload = multer({ dest: 'uploads/' })
-const fs =require ('fs')
-const util = require('util')
+
+const fs = require('fs');
+const util = require('util');
 const unlinkFile= util.promisify(fs.unlink)
 
-const { uploadFile, getFileStream } = require ('./s3')
+const { uploadFile, getFileStream } = require('./s3');
 
-const { Pool } = require("pg");
+
+const { Pool } = require('pg');
 
 //Sets up encryption hashing tools:
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 //Used to access jwt tools
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 //const { json } = require('express');
 
 //Creates random strings for tokens
@@ -46,6 +50,8 @@ app.post("/api/login", (req, res) => {
   //Gets email and password from request body
   const email = req.body.email;
   const password = req.body.password;
+  const user_id = req.body.user_id;
+  const default_cohort = req.body.default_cohort;
   if (email === undefined || password === undefined) {
     res.send("No Email or password");
     //next({status:401, message:"No password or username"});
@@ -64,7 +70,8 @@ app.post("/api/login", (req, res) => {
           const user = {
             email: email,
             password: password,
-            user_id: results.rows[0].user_id,
+            user_id: user_id,
+            default_cohort: default_cohort
           };
           const accessToken = jwt.sign(user, process.env.TOKEN_SECRET);
           res.json({ user: user, accessToken: accessToken });
@@ -79,6 +86,8 @@ app.post("/api/login", (req, res) => {
 app.post("/api/register", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+  const userId = req.body.userId;
+  const defaultCohort = req.body.defaultCohort;
   if (password === undefined || email === undefined) {
     res.send("No Email or Password");
     //next({status:401, message:"No password or username"});
@@ -87,7 +96,7 @@ app.post("/api/register", (req, res) => {
 
   pool
     .query(
-      `INSERT INTO users (email, password, img ) VALUES ($1, $2, '/image/f84dd5fb0bda1ba2d636c0bfdc795115') ON CONFLICT (email) DO NOTHING RETURNING *`,
+      "INSERT INTO users (email, password) VALUES ($1, $2) ON CONFLICT (email) DO NOTHING RETURNING *",
       [email, password]
     )
     .then((results) => {
@@ -97,8 +106,9 @@ app.post("/api/register", (req, res) => {
       } else {
         const user = {
           email: email,
-          password: password,
-          user_id: results.rows[0].user_id,
+            password: password,
+            userId: userId,
+            defaultCohort: null
         };
         const accessToken = jwt.sign(user, process.env.TOKEN_SECRET);
         res.json({ user: user, accessToken: accessToken });
@@ -174,7 +184,8 @@ app.get("/api/cohorts", authenticateToken, (req, res) => {
 });
 
 //Route to select students from cohort//
-app.get("/api/students", authenticateToken, (req, res) => {
+app.get("/api/students/cohortName", authenticateToken, (req, res) => {
+  let cohortName = req.body.cohort_name
   pool
     .query(`SELECT * FROM students WHERE cohort_name = $1 ORDER BY name ASC`, [
       cohortName,
@@ -191,7 +202,8 @@ app.get("/api/students/:cohortdc", authenticateToken, (req, res) => {
     .then((result) => res.send(result.rows))
     .catch((error) => res.send(error));
 });
-// Route to storage image //
+
+// Route to store image //
 app.post('/image' , upload.single('image') , async (req, res) =>{
     const file= req.file
     console.log(file)
@@ -215,10 +227,10 @@ app.get('/images/:email',(req,res) =>{
 
 })
 app.patch('/update/img',(req,res)=>{
-    const email = req.body.email
+    const user = req.body.email
     const img = req.body.img
     //Updates the current img with the new one and returns new img
-    pool.query('UPDATE users SET img = $1 WHERE email = $2 RETURNING img', [img, email])
+    pool.query('UPDATE users SET img = $1 WHERE email = $2 RETURNING img', [img, user])
         .then(result => res.status(200).send(result.rows))
         .catch(error => res.status(404).send(error))
 })
@@ -244,17 +256,22 @@ app.post("/api/selectedstudents", authenticateToken, (req, res) => {
 
 //Adds a route to update users default cohort
 app.patch("/api/default-cohort", authenticateToken, (req, res) => {
-  //TODO change to email
   pool
     .query(
       "UPDATE users SET default_cohort = $1 WHERE email = $2 RETURNING default_cohort",
-      [req.body.default_cohort, req.body.username]
+      [req.body.default_cohort, req.body.email]
     )
     .then((result) => res.send(result.rows))
     .catch((error) => res.send(error));
 });
 
 //Call to get users default cohort data
+app.get("api/users/:id/default-cohort", authenticateToken, (req, res) =>{
+  const user_id = req.body.user_id;
+  pool.query(`SELECT default_cohort FROM users WHERE user_id = $1`, [user_id])
+  .then((result) => res.send(result.rows))
+  .catch((error) => res.send(error));
+});
 //Pseudo code:
 //SELECT * FROM variable cohort name RIGHT OUTER JOIN students where cohorit_id = cohort_id
 
@@ -267,30 +284,30 @@ app.patch("/api/default-cohort", authenticateToken, (req, res) => {
 // })
 
 //Route to create a new user
-// app.post('/api/create/user', (req, res) => {
-//     //Creates a random string with 25 different characters
-//     const random = Str.random(25)
-//     const user = req.body
-//     //Creates an account specific json web token using username and a random string
-//     const accountToken = jwt.sign({ id: user.username }, random)
-//     //Creates a random string to be updated each time user signs in
-//     //First created token is a place holder
-//     const sessionToken = Str.random(30)
-//     //hashes the input password to be stored securely
-//     bcrypt.hash(user.password, saltRounds, (err, hash) => {
-//         //The password is hashed now and can be stored with the hash parameter
-//         pool.query(`INSERT INTO users (username, password, img, token, session_token) VALUES ($1, $2,'/image/f84dd5fb0bda1ba2d636c0bfdc795115', $3, $4) ON CONFLICT (username) DO NOTHING RETURNING *`,
-//             [user.username, hash, accountToken, sessionToken])
-//             //Checks to see what was returned
-//             //If a account already exists it sends back result.rows with a length of zero
-//             //If account was created it sends back the account info
-//             .then(result => {
-//                 result.rows.length === 0 ?
-//                     res.status(409).send([{ result: 'false' }]) : res.status(201).send([{ result: 'true' }])
-//             })
-//             .catch(error => res.status(400).send(error))
-//     })
-// })
+app.post('/api/create/user', (req, res) => {
+    //Creates a random string with 25 different characters
+    const random = Str.random(25)
+    const user = req.body
+    //Creates an account specific json web token using username and a random string
+    const accountToken = jwt.sign({ id: user.username }, random)
+    //Creates a random string to be updated each time user signs in
+    //First created token is a place holder
+    const sessionToken = Str.random(30)
+    //hashes the input password to be stored securely
+    bcrypt.hash(user.password, saltRounds, (err, hash) => {
+        //The password is hashed now and can be stored with the hash parameter
+        pool.query(`INSERT INTO users (username, password, img, token, session_token) VALUES ($1, $2,'/image/f84dd5fb0bda1ba2d636c0bfdc795115', $3, $4) ON CONFLICT (username) DO NOTHING RETURNING *`,
+            [user.username, hash, accountToken, sessionToken])
+            //Checks to see what was returned
+            //If a account already exists it sends back result.rows with a length of zero
+            //If account was created it sends back the account info
+            .then(result => {
+                result.rows.length === 0 ?
+                    res.status(409).send([{ result: 'false' }]) : res.status(201).send([{ result: 'true' }])
+            })
+            .catch(error => res.status(400).send(error))
+    })
+})
 
 //Route handler for user login
 app.post('/api/login', (req, res) => {

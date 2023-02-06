@@ -1,4 +1,4 @@
-import { StrictMode, useState } from 'react';
+import React, { StrictMode, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Home } from './routes/Home';
 import { Login } from './routes/Login';
@@ -6,7 +6,7 @@ import { Register } from './routes/Register';
 import { PageNotFound } from './routes/PageNotFound';
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
-export const App = ({ auth }) => {
+const App = ({ auth }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(auth ? auth.isLoggedIn : false);
 
   return (
@@ -22,3 +22,5 @@ export const App = ({ auth }) => {
  
   );
 }
+
+export default App

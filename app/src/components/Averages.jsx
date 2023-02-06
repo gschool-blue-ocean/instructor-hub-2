@@ -19,8 +19,8 @@ export const StudentAverages = (props) => {
     ssAvg,
     sDbAvg,
     reactAvg,
-    teamworkAvg,
-    techAvg,
+    loopsAvg,
+    funAvg,
   } = props;
 
   let gradedLearnAvg = [];
@@ -30,18 +30,18 @@ export const StudentAverages = (props) => {
     }
   }
 
-  let gradedTeamworkAvg = [];
+  let gradedLoopsAvg = [];
   for (let i = 0; i < students.length; i++) {
     if (students[i].loops !== null) {
-      gradedTeamworkAvg.push(students[i]);
+      gradedLoopsAvg.push(students[i]);
     }
   }
-  console.log(gradedTeamworkAvg);
+  console.log(gradedLoopsAvg);
 
-  let gradedTechAvg = [];
+  let gradedFunAvg = [];
   for (let i = 0; i < students.length; i++) {
     if (students[i].fun !== null) {
-      gradedTechAvg.push(students[i]);
+      gradedFunAvg.push(students[i]);
     }
   }
 
@@ -104,8 +104,8 @@ export const StudentAverages = (props) => {
         label: "Cohort Avg",
         data: [
           Math.floor(learnAvg / gradedLearnAvg.length),
-          Math.floor(teamworkAvg / gradedTeamworkAvg.length),
-          Math.floor(techAvg / gradedTechAvg.length),
+          Math.floor(loopsAvg / gradedLoopsAvg.length),
+          Math.floor(funAvg / gradedFunAvg.length),
           Math.floor(arraysAvg / gradedArraysAvg.length),
           Math.floor(objAvg / gradedObjAvg.length),
           Math.floor(domApiAvg / gradedDomApiAvg.length),

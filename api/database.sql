@@ -77,6 +77,14 @@ CREATE TABLE cohorts (
   cohort_max INT
 );
 
+INSERT INTO 
+  cohorts (cohort_name, begin_date, end_date, instructor)
+VALUES
+  ('MCSP-17', '2022-10-20', '2023-03-01', 'Jim Halpert'),
+  ('MCSP-18', '2022-11-10', '2023-03-21', 'Michael Scott'),
+  ('MCSP-19', '2022-12-01', '2023-04-01', 'Dwight Schrute'),
+  ('MCSP-20', '2022-12-25', '2023-04-30', 'Meredith Palmer');
+
 CREATE TABLE students (
   student_id SERIAL PRIMARY KEY,
   name TEXT,
@@ -91,7 +99,7 @@ CREATE TABLE students (
   ss INT,
   s_db INT,
   react INT,
-  cohort_name TEXT,
+  cohort_id TEXT,
   ETS_date DATE,
   github TEXT,
   FOREIGN KEY (cohort_name) REFERENCES cohorts(cohort_name) ON DELETE CASCADE
@@ -121,6 +129,28 @@ CREATE TABLE notes (
   FOREIGN KEY (student_id) REFERENCES students(student_id) ON DELETE CASCADE
 );
 
+-- CREATE TABLE proficiency_rates (
+--   skill_id INT UNIQUE,
+--   skill_descr TEXT NOT NULL
+-- );
+
+-- CREATE TABLE student_tech_skills (
+--   student_id INT,
+--   score INT,
+--   record_date TIMESTAMPTZ,
+--   FOREIGN KEY (student_id) REFERENCES students(student_id) ON DELETE CASCADE,
+--   FOREIGN KEY (score) REFERENCES proficiency_rates(skill_id) ON DELETE RESTRICT
+-- );
+
+
+-- CREATE TABLE student_teamwork_skills (
+--   student_id INT,
+--   score INT,
+--   record_date TIMESTAMPTZ,
+--   FOREIGN KEY (student_id) REFERENCES students(student_id) ON DELETE CASCADE,
+--   FOREIGN KEY (score) REFERENCES proficiency_rates(skill_id) ON DELETE RESTRICT
+-- );
+
 --THIS ALLOWS TRACKING STUDENTS' PROJECT RATINGS/SCORES
 CREATE TABLE projects (
   project_id SERIAL PRIMARY KEY,
@@ -130,51 +160,15 @@ CREATE TABLE projects (
 INSERT INTO
   projects (project_name)
 VALUES
-  ('Checkerboard');
-
-INSERT INTO
-  projects (project_name)
-VALUES
-  ('Stoplight');
-
-INSERT INTO
-  projects (project_name)
-VALUES
-  ('Twiddler');
-
-INSERT INTO
-  projects (project_name)
-VALUES
-  ('TV Show Finder');
-
-INSERT INTO
-  projects (project_name)
-VALUES
-  ('Hack-a-thon');
-
-INSERT INTO
-  projects (project_name)
-VALUES
-  ('Front End Project');
-
-INSERT INTO
-  projects (project_name)
-VALUES
-  ('React MVP');
-
-INSERT INTO
-  projects (project_name)
-VALUES
-  ('Front End Capstone');
-
-INSERT INTO
-  projects (project_name)
-VALUES
-  ('System Design Captosone');
-
-INSERT INTO
-  projects (project_name)
-VALUES
+  ('Checkerboard'),
+  ('Stoplight'),
+  ('Twiddler'),
+  ('TV Show Finder'),
+  ('Hack-a-thon'),
+  ('Front End Project'),
+  ('React MVP'),
+  ('Front End Capstone'),
+  ('System Design Captosone'),
   ('Blue Ocean');
 
 CREATE TABLE project_grades (
@@ -198,48 +192,14 @@ CREATE TABLE learn (
 INSERT INTO
   learn (assessment_name)
 VALUES
-  (
-    'Data Types, Variables, and Expressions Assessment'
-  );
-
-INSERT INTO
-  learn (assessment_name)
-VALUES
-  ('Loops and Control Flow Assessment');
-
-INSERT INTO
-  learn (assessment_name)
-VALUES
-  ('Functions Assessment');
-
-INSERT INTO
-  learn (assessment_name)
-VALUES
-  ('Arrays Assessment');
-
-INSERT INTO
-  learn (assessment_name)
-VALUES
-  ('Objects Assessment');
-
-INSERT INTO
-  learn (assessment_name)
-VALUES
-  ('DOM API Assessment');
-
-INSERT INTO
-  learn (assessment_name)
-VALUES
-  ('Server Side Assessment');
-
-INSERT INTO
-  learn (assessment_name)
-VALUES
-  ('Server and DB Assessment');
-
-INSERT INTO
-  learn (assessment_name)
-VALUES
+  ('Data Types, Variables, and Expressions Assessment'),
+  ('Loops and Control Flow Assessment'),
+  ('Functions Assessment'),
+  ('Arrays Assessment'),
+  ('Objects Assessment'),
+  ('DOM API Assessment'), 
+  ('Server Side Assessment'),
+  ('Server and DB Assessment'),
   ('React Assessment');
 
 CREATE TABLE learn_grades (
@@ -257,8 +217,9 @@ CREATE UNIQUE INDEX learn_grades_only_one_per_student ON learn_grades (student_i
 /* ============================================================
  -- SECTION 2: FUNCTIONS AND TRIGGERS
  ============================================================== */
--- --- (3) UPDATE STUDENT'S LEARN AVG WHEN NEW GRADE IS ADDED OR UPDATED TO LEARN.
--- -- FUNCTION: UPDATE STUDENT'S LEARN AVG SCORE
+
+-- --- (1) UPDATE STUDENT'S LEARN AVG WHEN NEW GRADE IS ADDED OR UPDATED TO LEARN.
+
 CREATE
 OR REPLACE FUNCTION calc_learnavg() RETURNS trigger AS $ $ BEGIN WITH grades AS (
   SELECT
@@ -291,8 +252,9 @@ INSERT
 UPDATE
   OF assessment_grade ON learn_grades FOR EACH ROW EXECUTE PROCEDURE calc_learnavg();
 
+
 -- --- (2) UPDATE STUDENT'S loop grade WHEN NEW grade IS ADDED OR UPDATED.
--- ---- FUNCTION: UPDATE STUDENT'S TEAMWORK AVG SCORE
+
 CREATE
 OR REPLACE FUNCTION calc_loopsGrade() RETURNS trigger AS $ $ BEGIN WITH grades AS (
   SELECT
@@ -326,8 +288,8 @@ INSERT
 UPDATE
   OF assessment_grade ON learn_grades FOR EACH ROW EXECUTE PROCEDURE calc_loopsGrade();
 
---- (3) UPDATE STUDENT'S dve grade WHEN NEW grade IS ADDED OR UPDATED.
--- FUNCTION: UPDATE STUDENT'S TEAMWORK AVG SCORE
+  --- (3) UPDATE STUDENT'S dve grade WHEN NEW grade IS ADDED OR UPDATED.
+
 CREATE
 OR REPLACE FUNCTION calc_dveGrade() RETURNS trigger AS $ $ BEGIN WITH grades AS (
   SELECT
@@ -361,8 +323,9 @@ INSERT
 UPDATE
   OF assessment_grade ON learn_grades FOR EACH ROW EXECUTE PROCEDURE calc_dveGrade();
 
+
 --   -- --- (4) UPDATE STUDENT'S functions grade WHEN NEW grade IS ADDED OR UPDATED.
--- -- ---- FUNCTION: UPDATE STUDENT'S TEAMWORK AVG SCORE
+
 CREATE
 OR REPLACE FUNCTION calc_functionsGrade() RETURNS trigger AS $ $ BEGIN WITH grades AS (
   SELECT
@@ -396,8 +359,8 @@ INSERT
 UPDATE
   OF assessment_grade ON learn_grades FOR EACH ROW EXECUTE PROCEDURE calc_functionsGrade();
 
---   -- --- (2) UPDATE STUDENT'S arrays grade WHEN NEW grade IS ADDED OR UPDATED.
--- -- ---- FUNCTION: UPDATE STUDENT'S TEAMWORK AVG SCORE
+--   -- --- (5) UPDATE STUDENT'S arrays grade WHEN NEW grade IS ADDED OR UPDATED.
+
 CREATE
 OR REPLACE FUNCTION calc_arraysGrade() RETURNS trigger AS $ $ BEGIN WITH grades AS (
   SELECT
@@ -431,8 +394,8 @@ INSERT
 UPDATE
   OF assessment_grade ON learn_grades FOR EACH ROW EXECUTE PROCEDURE calc_arraysGrade();
 
---   -- --- (5) UPDATE STUDENT'S obj grade WHEN NEW grade IS ADDED OR UPDATED.
--- -- ---- FUNCTION: UPDATE STUDENT'S TEAMWORK AVG SCORE
+--   -- --- (6) UPDATE STUDENT'S obj grade WHEN NEW grade IS ADDED OR UPDATED.
+
 CREATE
 OR REPLACE FUNCTION calc_objGrade() RETURNS trigger AS $ $ BEGIN WITH grades AS (
   SELECT
@@ -466,8 +429,8 @@ INSERT
 UPDATE
   OF assessment_grade ON learn_grades FOR EACH ROW EXECUTE PROCEDURE calc_objGrade();
 
---   -- --- (6) UPDATE STUDENT'S dom_api grade WHEN NEW grade IS ADDED OR UPDATED.
--- -- ---- FUNCTION: UPDATE STUDENT'S TEAMWORK AVG SCORE
+--   -- --- (7) UPDATE STUDENT'S dom_api grade WHEN NEW grade IS ADDED OR UPDATED.
+
 CREATE
 OR REPLACE FUNCTION calc_domApiGrade() RETURNS trigger AS $ $ BEGIN WITH grades AS (
   SELECT
@@ -501,8 +464,8 @@ INSERT
 UPDATE
   OF assessment_grade ON learn_grades FOR EACH ROW EXECUTE PROCEDURE calc_domApiGrade();
 
--- -- --- (7) UPDATE STUDENT'S ss grade WHEN NEW grade IS ADDED OR UPDATED.
--- -- ---- FUNCTION: UPDATE STUDENT'S TEAMWORK AVG SCORE
+-- -- --- (8) UPDATE STUDENT'S ss grade WHEN NEW grade IS ADDED OR UPDATED.
+
 CREATE
 OR REPLACE FUNCTION calc_ssGrade() RETURNS trigger AS $ $ BEGIN WITH grades AS (
   SELECT
@@ -536,8 +499,8 @@ INSERT
 UPDATE
   OF assessment_grade ON learn_grades FOR EACH ROW EXECUTE PROCEDURE calc_ssGrade();
 
---   -- --- (2) UPDATE STUDENT'S s_db grade WHEN NEW grade IS ADDED OR UPDATED.
--- -- ---- FUNCTION: UPDATE STUDENT'S TEAMWORK AVG SCORE
+--   -- --- (9) UPDATE STUDENT'S s_db grade WHEN NEW grade IS ADDED OR UPDATED.
+
 CREATE
 OR REPLACE FUNCTION calc_sDbGrade() RETURNS trigger AS $ $ BEGIN WITH grades AS (
   SELECT
@@ -570,9 +533,9 @@ INSERT
   OR
 UPDATE
   OF assessment_grade ON learn_grades FOR EACH ROW EXECUTE PROCEDURE calc_sDbGrade();
+  
+--   -- --- (10) UPDATE STUDENT'S react grade WHEN NEW grade IS ADDED OR UPDATED.
 
---   -- --- (2) UPDATE STUDENT'S react grade WHEN NEW grade IS ADDED OR UPDATED.
--- -- ---- FUNCTION: UPDATE STUDENT'S TEAMWORK AVG SCORE
 CREATE
 OR REPLACE FUNCTION calc_reactGrade() RETURNS trigger AS $ $ BEGIN WITH grades AS (
   SELECT
@@ -606,7 +569,10 @@ INSERT
 UPDATE
   OF assessment_grade ON learn_grades FOR EACH ROW EXECUTE PROCEDURE calc_reactGrade();
 
--- --- (4)  UPDATE COHORT'S LOWEST ASSESSMENT AVERAGE WHEN STUDENT'S LEARN AVERAGE IS ADDED OR UPDATED.
+--============================================================================================  
+-- UPDATE COHORT'S LOWEST ASSESSMENT AVERAGE WHEN STUDENT'S LEARN AVERAGE IS ADDED OR UPDATED.
+--============================================================================================
+
 -- -- FUNCTION:UPDATE COHORT LOWEST AVG SCORE
 -- CREATE
 -- OR REPLACE FUNCTION calc_cohortmin() RETURNS trigger AS $$ BEGIN WITH grades AS (
@@ -635,7 +601,11 @@ UPDATE
 --   OR
 -- UPDATE
 --   of learn_avg ON students FOR EACH ROW EXECUTE PROCEDURE calc_cohortmin();
--- --- (5)  UPDATE COHORT'S HIGHEST ASSESSMENT AVERAGE WHEN STUDENT'S LEARN AVERAGE IS ADDED OR UPDATED.
+
+--=============================================================================================
+-- UPDATE COHORT'S HIGHEST ASSESSMENT AVERAGE WHEN STUDENT'S LEARN AVERAGE IS ADDED OR UPDATED.
+--=============================================================================================
+-- 
 -- -- FUNCTION:UPDATE COHORT HIGHEST AVG SCORE
 -- CREATE
 -- OR REPLACE FUNCTION calc_cohortmax() RETURNS trigger AS $$ BEGIN WITH grades AS (
@@ -662,9 +632,13 @@ UPDATE
 -- AFTER
 -- UPDATE
 --   of learn_avg ON students FOR EACH ROW EXECUTE PROCEDURE calc_cohortmax();
+
 -- Update cohort avg
--- --- (6)  UPDATE THE OVERALL AVERAGE OF STUDENT'S ASSESSMENT-AVERAGES FOR THE COHORT WHEN
--- ---      STUDENT'S LEARN AVERAGE IS ADDED OR UPDATED.
+
+--=============================================================================================================================
+-- UPDATE THE OVERALL AVERAGE OF STUDENT'S ASSESSMENT-AVERAGES FOR THE COHORT WHEN STUDENT'S LEARN AVERAGE IS ADDED OR UPDATED.
+--=============================================================================================================================
+
 -- -- FUNCTION:UPDATE COHORT OVERALL AVG SCORE
 -- CREATE
 -- OR REPLACE FUNCTION calc_cohortavg() RETURNS trigger AS $$ BEGIN WITH grades AS (
@@ -691,6 +665,7 @@ UPDATE
 -- AFTER
 -- UPDATE
 --   of learn_avg ON students FOR EACH ROW EXECUTE PROCEDURE calc_cohortavg();
+
 /* ============================================================
  -- Load Proficiency Ratings
  ============================================================== */

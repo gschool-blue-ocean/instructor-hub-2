@@ -1,12 +1,11 @@
 import "../css/Register.css";
 import Spinner from "react-bootstrap/Spinner";
 import { Navigate, Link } from "react-router-dom";
-import { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "../images/galvanize-logo.svg";
 import swal from "sweetalert";
-import { useState } from "react";
 import { Icon } from "react-icons-kit";
 import { eye } from "react-icons-kit/feather/eye";
 import { eyeOff } from "react-icons-kit/feather/eyeOff";

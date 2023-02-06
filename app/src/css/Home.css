@@ -6,35 +6,33 @@ html {
 }
 
 body {
-  display: grid;
+  display: flex;
+  flex-flow: row nowrap;
   width: 100%;
   height: 100%;
   margin: 0;
   justify-items: center;
   font-family: 'Assistant', sans-serif;
-  background-image: linear-gradient(to right bottom, #c9eaff, #d7edff, #e4f0ff, #eff4ff, #f7f8ff, #f7f8ff, #f7f8ff, #f7f8ff, #eff4ff, #e4f0ff, #d7edff, #c9eaff);
+  background-image: linear-gradient(to right bottom, #c9eaff,#f7f8ff, #c9eaff);
 }
 
 p {
   font-size: 18px;
 }
+#home{
+  display: flex;
+  flex-flow: column wrap;
+}
 
 header {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  grid-template-rows: 1fr;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  width: 100%;
-  height: 100px;
-
+  display: flex;
+  width: 100vw;
+  height: 13vh;
+  margin-top:2vh;
+  margin-bottom: 1em;
+  background: url('../images/galvanize-logo.svg') center no-repeat;
 }
 
-header h1 {
-  width: 235px;
-  background: url('../images/galvanize-logo.svg') no-repeat;
-  text-indent: -9999px;
-}
 
 div#home-container {
   width: 1000px;
@@ -57,15 +55,19 @@ div#admin-menu button {
 /******************
   NAVIGATION
 *******************/
-nav {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 1fr;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  align-items: center;
+#navbar{
+  /* background-image: linear-gradient(to bottom,#fff, #ff8a3d); */
+  justify-content: center;
+}
+#nav-bar-link {
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
   width: 100%;
-  height: 100px;
+  height: 10vh;
+  color: #0d0f4a;
+  text-decoration: underline;
+  margin-bottom: 1em;
 }
 
 nav svg {
@@ -247,12 +249,9 @@ button#copy-groups-btn {
   border-radius: 50%;
   height: 70px;
   width: 70px;
-  border-color: #000;
   margin-left: 500px;
 }
-#header{
-  display: flex;
-}
+
 #admin-menu{
   margin-left: 40px;
   margin-top: 20px;
