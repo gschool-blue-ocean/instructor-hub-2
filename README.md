@@ -54,8 +54,8 @@ COOKIES_SECRET_KEY=""
 TOKEN_SECRET="hello"
 AWS_BUCKET_NAME='upload-img-s3'
 AWS_BUCKET_REGION='us-east-1'
-AWS_ACCESS_KEY='AKIA3RYQAR76TOC7MWH3'
-AWS_SECRET_KEY='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'
+AWS_ACCESS_KEY='fill with access key'
+AWS_SECRET_KEY='fill with secret key'
 
 To start in a development environment use `npm start` in the root and `npm run dev` in the `/api` directory.
 
