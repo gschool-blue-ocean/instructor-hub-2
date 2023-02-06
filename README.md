@@ -126,3 +126,12 @@ Spike testing is used to test the system's performance during sudden and unexpec
 Soak testing is used to test the system's performance over an extended period of time.
 Example can be found in the root directory.
 ```
+
+## E2E Testing with Selenium
+
+_Installation:_
+Install Selenium by running npm install -selenium in your terminal.
+Install log4js by running npm install -log4js in your terminal.
+
+_Run Test_
+From your test root directory, type npm run "test file"
