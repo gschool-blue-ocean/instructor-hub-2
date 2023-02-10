@@ -2,7 +2,7 @@ import React from "react";
 import { Nav} from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
-const LeftNav = (props) => {
+export const LeftNav = (props) => {
   const {handleLinkClicked} = props
   return (
     // <Navbar bg="light" expand="lg" style={{ height: "100vh", width: "10vw", position: "fixed", zIndex: "1"}}>
@@ -32,5 +32,3 @@ const LeftNav = (props) => {
     // </Navbar>
 );
 };
-
-export default LeftNav;

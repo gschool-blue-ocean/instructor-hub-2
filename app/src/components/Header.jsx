@@ -4,8 +4,8 @@ import "../images/galvanize-logo.svg";
 import React, { useState } from "react";
 // import ProfilePhoto from "../../../../back-again/unused_files/ProfilePhoto";
 
-const Header = (props) => {
-  const { courses, isLoadingCourses, isLoggedIn, setIsLoggedIn } = props;
+export const Header = (props) => {
+  const { cohortName, isLoadingCourses, isLoggedIn, setIsLoggedIn } = props;
 
   return (
     <header id="header">
@@ -18,5 +18,3 @@ const Header = (props) => {
     </header>
   );
 };
-
-export default Header;

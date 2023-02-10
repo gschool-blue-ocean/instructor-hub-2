@@ -1,10 +1,11 @@
 import "../css/Login.css";
 import { Navigate, Link } from "react-router-dom";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import swal from "sweetalert";
 import Spinner from "react-bootstrap/Spinner";
+import { useState } from "react";
 import "../images/galvanize-logo.svg";
 import { Icon } from "react-icons-kit";
 import { eye } from "react-icons-kit/feather/eye";
@@ -82,10 +83,10 @@ export const Login = (props) => {
     } else {
       sessionStorage.setItem("email", info.user.email);
       sessionStorage.setItem("accessToken", info.accessToken);
-      sessionStorage.setItem("default_cohort", info.user.default_cohort);
-      sessionStorage.setItem("user_id", info.user.user_id);
-      // //TODO update cohort
-      info.user.default_cohort
+      // sessionStorage.setItem("user_id", info.users.user_id);
+
+      //TODO update cohort
+      info.cohort
         ? sessionStorage.setItem("defaultCohort", info.cohort)
         : console.log("no default");
 

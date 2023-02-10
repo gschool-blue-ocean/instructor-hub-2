@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Chart as ChartJS,
   BarElement,
@@ -9,81 +9,73 @@ import { Bar } from "react-chartjs-2";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
-export const StudentAverages = (props) => {
+export const Averages = (props) => {
   const {
-    students,
-    learnAvg,
-    arraysAvg,
-    objAvg,
-    domApiAvg,
-    ssAvg,
-    sDbAvg,
-    reactAvg,
-    loopsAvg,
-    funAvg,
+    studentData,
+    ...avgProps
   } = props;
 
   let gradedLearnAvg = [];
-  for (let i = 0; i < students.length; i++) {
-    if (students[i].dve !== null) {
-      gradedLearnAvg.push(students[i]);
+  for (let i = 0; i < studentData.length; i++) {
+    if (studentData[i].dve !== null) {
+      gradedLearnAvg.push(studentData[i]);
     }
   }
 
   let gradedLoopsAvg = [];
-  for (let i = 0; i < students.length; i++) {
-    if (students[i].loops !== null) {
-      gradedLoopsAvg.push(students[i]);
+  for (let i = 0; i < studentData.length; i++) {
+    if (studentData[i].loops !== null) {
+      gradedLoopsAvg.push(studentData[i]);
     }
   }
   console.log(gradedLoopsAvg);
 
   let gradedFunAvg = [];
-  for (let i = 0; i < students.length; i++) {
-    if (students[i].fun !== null) {
-      gradedFunAvg.push(students[i]);
+  for (let i = 0; i < studentData.length; i++) {
+    if (studentData[i].fun !== null) {
+      gradedFunAvg.push(studentData[i]);
     }
   }
 
   let gradedArraysAvg = [];
-  for (let i = 0; i < students.length; i++) {
-    if (students[i].arrays !== null) {
-      gradedArraysAvg.push(students[i]);
+  for (let i = 0; i < studentData.length; i++) {
+    if (studentData[i].arrays !== null) {
+      gradedArraysAvg.push(studentData[i]);
     }
   }
 
   let gradedObjAvg = [];
-  for (let i = 0; i < students.length; i++) {
-    if (students[i].obj !== null) {
-      gradedObjAvg.push(students[i]);
+  for (let i = 0; i < studentData.length; i++) {
+    if (studentData[i].obj !== null) {
+      gradedObjAvg.push(studentData[i]);
     }
   }
 
   let gradedDomApiAvg = [];
-  for (let i = 0; i < students.length; i++) {
-    if (students[i].dom_api !== null) {
-      gradedDomApiAvg.push(students[i]);
+  for (let i = 0; i < studentData.length; i++) {
+    if (studentData[i].dom_api !== null) {
+      gradedDomApiAvg.push(studentData[i]);
     }
   }
 
   let gradedSsAvg = [];
-  for (let i = 0; i < students.length; i++) {
-    if (students[i].ss !== null) {
-      gradedSsAvg.push(students[i]);
+  for (let i = 0; i < studentData.length; i++) {
+    if (studentData[i].ss !== null) {
+      gradedSsAvg.push(studentData[i]);
     }
   }
 
   let gradedSDbAvg = [];
-  for (let i = 0; i < students.length; i++) {
-    if (students[i].s_db !== null) {
-      gradedSDbAvg.push(students[i]);
+  for (let i = 0; i < studentData.length; i++) {
+    if (studentData[i].s_db !== null) {
+      gradedSDbAvg.push(studentData[i]);
     }
   }
 
   let gradedReact = [];
-  for (let i = 0; i < students.length; i++) {
-    if (students[i].react !== null) {
-      gradedReact.push(students[i]);
+  for (let i = 0; i < studentData.length; i++) {
+    if (studentData[i].react !== null) {
+      gradedReact.push(studentData[i]);
     }
   }
 

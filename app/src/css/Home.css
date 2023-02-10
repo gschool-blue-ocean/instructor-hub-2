@@ -117,7 +117,7 @@ div#select-cohort button, #generate-group-btn {
 /******************
   STUDENT-LIST
 *******************/
-div#student-list-container {
+/* div#student-list-container {
   display: grid;
   grid-template-columns: 4fr 2fr;
   grid-template-rows: 1fr;
@@ -125,6 +125,13 @@ div#student-list-container {
   grid-row-gap: 0px;
   margin-top: 10px;
   height: 200px !important;
+} */
+
+#add-students-btn:hover{
+  background: #0d0f4a;
+  color:#ff8a3d;  
+  transition: all 1s;
+  transition-delay: .6s
 }
 
 td.student-average button {
@@ -138,30 +145,30 @@ td.student-average button:hover {
 }
 
 table#student-list {
-  display: block;
-  height: 330px !important;
+  display: flexbox;
+  /* height: 330px !important; */
   overflow-y: scroll;
   box-shadow: inset 0 0px -15px #ccc;
+  justify-items: center;
 
 }
 
 table#student-list h3 {
-  font-size: 20px;
+  font-size: 1.5em;
 }
 
 table#student-list thead {
   position: sticky;
   top: 0;
-  height: 20px;
+  width: '100%';
   background-color: #eee;
   vertical-align: middle;
   padding: 0;
-  z-index: 2;
   box-shadow: 0 0px 15px #ccc;
 }
 
 table#student-list tbody {
-  z-index: 1;
+  vertical-align: middle;
 }
 
 /* width */
