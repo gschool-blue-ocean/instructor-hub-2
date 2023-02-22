@@ -17,35 +17,18 @@
     "react-icons-kit": "^2.0.0",
     "react-query": "^3.39.2",
     "react-router-dom": "^6.4.5",
-    "react-scripts": "5.0.1",
     "sweetalert": "^2.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --runInBand --detectOpenHandles --transformIgnorePatterns 'node_modules/(?!@codemirror)/'",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "dev": "vite",
+    "build": "vite build"
   },
   "devDependencies": {
-    "jest-canvas-mock": "^2.4.0"
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@vitejs/plugin-react": "^3.1.0",
+    "jest-canvas-mock": "^2.4.0",
+    "vite": "^4.1.0"
   }
 }
