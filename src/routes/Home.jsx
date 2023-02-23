@@ -35,16 +35,20 @@ export const Home = (props) => {
     })
       .then(result => result.json())
       .then(data => {
-        data[0]?.response == 'true' ? setIsLoggedIn(true) : kickUser()
+        data[0]?.response == 'true' ? 
+        setIsLoggedIn(true) : 
+        setIsLoggedIn(false)
       })
 
   }, [])
 
-  function kickUser() {
-    swal('Not Authenticated')
-    sessionStorage.clear()
-    setIsLoggedIn(false)
-  }
+  // kickUser()
+
+  // function kickUser() {
+  //   swal('Not Authenticated')
+  //   sessionStorage.clear()
+  //   setIsLoggedIn(false)
+  // }
 
   //Sends a fetch to get all of a users projects/classes from asana
    useEffect(() => {
