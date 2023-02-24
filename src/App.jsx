@@ -6,6 +6,7 @@ import { Login } from './routes/Login';
 import { Register } from './routes/Register';
 import { PageNotFound } from './routes/PageNotFound';
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { AssessmentModal } from './components/AssessmentModal';
 
 export const App = ({ auth }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(auth ? auth.isLoggedIn : false);
@@ -16,6 +17,7 @@ export const App = ({ auth }) => {
         <Route path="/" element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/register" element={<Register isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/assesment" element={<AssessmentModal isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
