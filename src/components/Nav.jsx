@@ -1,6 +1,7 @@
 import { WeeklyModal } from './WeeklyModal';
 import { ProjectModal } from './ProjectModal';
 import { AssessmentModal } from './AssessmentModal';
+import { Assessment } from './Assessment';
 import { CreateCohortModal } from './CreateCohortModal';
 import React, { useState } from 'react';
 
@@ -16,6 +17,7 @@ export const Nav = (props) => {
       <WeeklyModal courses={courses} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} />
       <ProjectModal courses={courses} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} />
       <AssessmentModal courses={courses} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} />
+      <Assessment courses={courses} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents}/>
     </nav>
   );
 }
