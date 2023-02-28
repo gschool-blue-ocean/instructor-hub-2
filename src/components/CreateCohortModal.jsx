@@ -14,7 +14,7 @@ export const CreateCohortModal = () => {
   const url = "http://localhost:8000"
 
   // state for CreateCohort Modal displaying/not displaying
-  const [showCreateCohortModal, setShowCreateCohortModal] = useState(false);
+  const [showCreateCohortModal, setShowCreateCohortModal] = useState(true);
   // state for cohort begin date
   const [beginDate, setBeginDate] = useState(null);
   // state for cohort end date
