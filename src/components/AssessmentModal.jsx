@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import { BsBarChartLineFill } from "react-icons/bs";
 import { ModalList } from './ModalList';
 import swal from 'sweetalert';
+import { IoMdRefresh } from 'react-icons/io';
 
 export const AssessmentModal = (props) => {
   const { courses, setCourses, checked, setChecked, selectedStudents, setSelectedStudents } = props
@@ -39,6 +40,7 @@ export const AssessmentModal = (props) => {
           return {
             ...student,
             learnGrade: parseInt(e.target.value),
+            
           };
         }
         return student;
@@ -99,7 +101,6 @@ export const AssessmentModal = (props) => {
 
   // submit the data to the database
   const handleSubmitButton = () => {
-
     //filters all of the values that are already in the database
     let filteredStudentsWhoAlreadyHaveGrades = selectedStudents.filter(student => {
       for(let i = 0; i < currentLearnGrades.length; i++){
@@ -138,7 +139,8 @@ export const AssessmentModal = (props) => {
       })
       .then(result => result.json())
       .then(data => {
-        swal("learn grades posted successfully")        
+        swal("learn grades posted successfully")  
+           
       })
       .catch(error => {
         console.log(error)

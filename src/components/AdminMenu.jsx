@@ -30,7 +30,7 @@ export const AdminMenu = (props) => {
   const [defaultCohort, setDefaultCohort] = useState('')
   function handleCohortChange(e){
     setDefaultCohort(e.target.value)
-    location.reload(true);
+   
   }
 
   function changeDefaultCohort(){
