@@ -48,7 +48,6 @@ export const StudentList = (props) => {
     fetch(`${URL}/students/${evt}`)
       .then(result => result.json())
       .then(data => setStudents(data))
-      location.reload(true);
     console.log(students)
   }
 
