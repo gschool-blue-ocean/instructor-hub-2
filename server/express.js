@@ -2,11 +2,9 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-
 require('dotenv').config();
 
 const { Pool } = require('pg');
-
 
 //Sets up encryption hashing tools:
 const bcrypt = require('bcrypt');
@@ -25,7 +23,7 @@ const format = require('pg-format')
 const PORT = 8000;
 
 //Sets up the pool for the server
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool({ database: 'blueocean'});
 pool.connect();
 
 app.use(cors());
