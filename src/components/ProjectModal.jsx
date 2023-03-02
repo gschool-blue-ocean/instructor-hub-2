@@ -59,6 +59,7 @@ export const ProjectModal = (props) => {
     fetch(`${URL}/api/projects/project-names`)
       .then(res => res.json())
       .then(data => {
+        
         setAllProjectNames(data)
       });
     setShowProjectModal(true);
@@ -79,6 +80,7 @@ export const ProjectModal = (props) => {
       .then(res => res.json())
       .then(data => {
         setCurrentProjectGrades(data)
+        console.log(data)
       });
     setShowProjectGradingModal(true);
   }
@@ -191,9 +193,14 @@ export const ProjectModal = (props) => {
           <Modal.Title>Project</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <select id="project-selector" name="projects" onChange={(e) => handleSelectProject(e)}>
+          <select id="project-selector" name="projects" onChange={(e) => {
+            console.log("hi")
+            handleSelectProject(e)
+            }}>
             <option value="placeholder">{currentSelectedProjectName === "" ? "-- Select Project --" : currentSelectedProjectName}</option>
+            {console.log(allProjectNames)}
             {allProjectNames.map(names => {
+              console.log(names)
               if (currentSelectedProjectName === names.project_name) {
                 return
               }

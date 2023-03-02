@@ -27,7 +27,7 @@ import format from 'pg-format';
 const PORT = 8000;
 
 //Sets up the pool for the server
-const pool = new Pool({ database: 'blueocean'});
+const pool = new pg.Pool({ database: 'blueocean'});
 pool.connect();
 
 app.use(cors());

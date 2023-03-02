@@ -13,6 +13,7 @@ export const ModalList = (props) => {
             .then(result => result.json())
             .then(data => {
                 setStudentsState(data)
+                console.log(data, "hi")
             })
     }, [])
     function clickStudent(e) {
