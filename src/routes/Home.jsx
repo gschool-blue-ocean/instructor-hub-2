@@ -5,10 +5,11 @@ import { Navigate } from "react-router-dom";
 import { Header } from "../components/Header";
 import { Nav } from "../components/Nav";
 import { StudentList } from "../components/StudentList";
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
 import swal from "sweetalert";
 import { StudentAverages } from "../components/StudentAverages";
 import Groups from "../components/Groups";
+export const CohortContext = createContext();
 
 export const Home = (props) => {
   const URL = "http://localhost:8000/api";
@@ -76,15 +77,19 @@ export const Home = (props) => {
     })
       .then((result) => result.json())
       .then((data) => {
-        data[0]?.response == "true" ? setIsLoggedIn(true) : kickUser();
+        data[0]?.response == "true"
+          ? setIsLoggedIn(true)
+          : setIsLoggedIn(false);
       });
   }, []);
 
-  function kickUser() {
-    swal("Not Authenticated");
-    sessionStorage.clear();
-    setIsLoggedIn(false);
-  }
+  // kickUser()
+
+  // function kickUser() {
+  //   swal('Not Authenticated')
+  //   sessionStorage.clear()
+  //   setIsLoggedIn(false)
+  // }
 
   //Sends a fetch to get all of a users projects/classes from asana
   useEffect(() => {
@@ -122,31 +127,35 @@ export const Home = (props) => {
   }
 
   return (
-    <div id="page-container">
-      <div id="header-container">
-        <Header
-          courses={courses}
-          isLoadingCourses={isLoadingCourses}
-          isLoggedIn={isLoggedIn}
-          setIsLoggedIn={setIsLoggedIn}
-        />
-        <Nav />
+    <CohortContext.Provider value={{ dbCohorts }}>
+      <div id="page-container">
+        <div id="header-container">
+          <Header
+            courses={courses}
+            isLoadingCourses={isLoadingCourses}
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+          />
+          <Nav />
+        </div>
+        <div id="home-container">
+          <StudentList
+            courses={courses}
+            isLoadingCourses={isLoadingCourses}
+            setIsLoadingCourses={setIsLoadingCourses}
+            data-testid="student-list"
+          />
+          <div id="graph-groups-container">
+            <StudentAverages
+              students={students}
+              learnAvg={learnAvg}
+              teamworkAvg={teamworkAvg}
+              techAvg={techAvg}
+            />
+            <Groups students={students} />
+          </div>
+        </div>
       </div>
-      <div id="home-container">
-        <Header
-          courses={courses}
-          isLoadingCourses={isLoadingCourses}
-          isLoggedIn={isLoggedIn}
-          setIsLoggedIn={setIsLoggedIn}
-        />
-        <Nav />
-        <StudentList
-          courses={courses}
-          isLoadingCourses={isLoadingCourses}
-          setIsLoadingCourses={setIsLoadingCourses}
-          data-testid="student-list"
-        />
-      </div>
-    </div>
+    </CohortContext.Provider>
   );
 };
