@@ -1,23 +1,33 @@
-import { WeeklyModal } from './WeeklyModal';
-import { ProjectModal } from './ProjectModal';
-import { AssessmentModal } from './AssessmentModal';
-import { Assessment } from './Assessment';
-import { CreateCohortModal } from './CreateCohortModal';
-import React, { useState } from 'react';
-
-
+import { WeeklyModal } from "./WeeklyModal";
+import { ProjectModal } from "./ProjectModal";
+import { AssessmentModal } from "./AssessmentModal";
+import { Assessment } from "./Assessment";
+import { CreateCohortModal } from "./CreateCohortModal";
+import React, { useState } from "react";
 
 export const Nav = (props) => {
-  const { courses, setCourses } = props
+  const { courses, setCourses } = props;
 
-  const [selectedStudents, setSelectedStudents] = useState([])
+  const [selectedStudents, setSelectedStudents] = useState([]);
 
   return (
-    <nav>
-      <WeeklyModal courses={courses} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} />
-      <ProjectModal courses={courses} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} />
-      <AssessmentModal courses={courses} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} />
-      <Assessment courses={courses} selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents}/>
-    </nav>
+    <div className="nav-container">
+      <WeeklyModal
+        courses={courses}
+        selectedStudents={selectedStudents}
+        setSelectedStudents={setSelectedStudents}
+      />
+      <ProjectModal
+        courses={courses}
+        selectedStudents={selectedStudents}
+        setSelectedStudents={setSelectedStudents}
+      />
+      <AssessmentModal
+        courses={courses}
+        selectedStudents={selectedStudents}
+        setSelectedStudents={setSelectedStudents}
+      />
+      <CreateCohortModal />
+    </div>
   );
-}
+};

@@ -177,7 +177,7 @@ export const ProjectModal = (props) => {
 
   return (
     <>
-      <button id="btn-project-update" onClick={() => {
+      <Button id="btn-project-update" onClick={() => {
         let currentClass = sessionStorage.getItem('currentClass')
         if (!currentClass) {
           setShowProjectModal(false)
@@ -185,7 +185,7 @@ export const ProjectModal = (props) => {
         } else {
           handleShowProjectModal()
         }
-      }}><BsFileEarmarkCodeFill /> Project Update </button>
+      }}><BsFileEarmarkCodeFill /> Project Update </Button>
 
       {/* Project modal */}
       <Modal id="project-update-modal" size="md" centered show={showProjectModal} onHide={handleCloseProjectModal}>
