@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import { BsFileEarmarkCodeFill } from "react-icons/bs";
 import { ModalList } from './ModalList';
 import swal from 'sweetalert';
+import { Navigate } from 'react-router-dom';
 
 export const ProjectModal = (props) => {
 
@@ -176,13 +177,16 @@ export const ProjectModal = (props) => {
   return (
     <>
       <button id="btn-project-update" onClick={() => {
-        let currentClass = sessionStorage.getItem('currentClass')
-        if (!currentClass) {
-          setShowProjectModal(false)
-          swal('No cohort selected')
-        } else {
-          handleShowProjectModal()
-        }
+
+        // let currentClass = sessionStorage.getItem('currentClass')
+        // if (!currentClass) {
+        //   setShowProjectModal(false)
+        //   swal('No cohort selected')
+        // } else {
+        //   handleShowProjectModal()
+        // }
+        console.log("clicked");
+        <Navigate to="/projects" />
       }}><BsFileEarmarkCodeFill /> Project Update </button>
 
       {/* Project modal */}

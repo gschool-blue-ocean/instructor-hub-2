@@ -5,7 +5,6 @@ import { CreateCohortModal } from './CreateCohortModal';
 import React, { useState } from 'react';
 
 
-
 export const Nav = (props) => {
   const { courses, setCourses } = props
 
