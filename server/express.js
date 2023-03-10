@@ -516,6 +516,19 @@ app.post("/api/create/students", (req, res) => {
           return { ...student, taskId: result.gid }; //returns each student object from body, and adds taskId to that student object
         })
         .catch((err) => console.error(err));
+<<<<<<< HEAD
+=======
+    }))
+    .then((students)=> {
+        const values = students.map((student)=>{
+            return [student.name, student.cohort_name, student.github, student.taskId];
+        })
+        pool.query(format('INSERT INTO students (name, cohort_name, github, asana_task_id) VALUES %L RETURNING *', values), [])
+        .then((result) => {
+            res.send(result.rows)
+        })
+        .catch(error => res.send(error))
+>>>>>>> 53f7141 (commiting)
     })
   )
     .then((students) => {
