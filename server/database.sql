@@ -348,10 +348,5 @@ VALUES('100', 'Exceeds standard');
 -- The closer R^2 is to 1, the stronger the predictive power
 -- SELECT regr_r2(learn_avg, tech_skills) as r2_learn_tech FROM students
 
-<<<<<<< HEAD
 -- alter table students add asana_task_id bigint;
 -- alter table learn_grades add column asanaSubTaskId bigint;
-=======
-alter table students add asana_task_id bigint;
-alter table learn_grades add column asanaSubTaskId bigint;
->>>>>>> 53f7141 (commiting)

@@ -354,14 +354,7 @@ app.post(`/api/application-update/learn-grades-post`, (req, res) => {
   });
   Promise.all(
     students.map((student) => {
-      pool
-        .query(
-          format(
-            "INSERT INTO learn_grades (student_id, assessment_id, assessment_grade) VALUES %L ON CONFLICT (student_id, assessment_id) DO UPDATE SET assessment_grade = excluded.assessment_grade",
-            values
-          ),
-          []
-        )
+      pool.query(format("INSERT INTO learn_grades (student_id, assessment_id, assessment_grade) VALUES %L ON CONFLICT (student_id, assessment_id) DO UPDATE SET assessment_grade = excluded.assessment_grade", values),[])
         .then((result) => {
           res.status(200).send(result.rows);
         })
@@ -380,6 +373,7 @@ app.post(`/api/application-update/learn-grades-post`, (req, res) => {
         .catch((err) => console.error(err))
         .then((result) => {
           let lastElement = result.rows.length - 1;
+          console.log("assessment_name ",result.rows[lastElement].assessment_name)
           //Create a sub task in Asana in this format: Assessment Name: Assessment Grade
           return client.tasks.createSubtaskForTask(result.rows[lastElement].asana_task_id, {
             name: `${result.rows[lastElement].assessment_name}: ${student.assessment_grade}`,
@@ -388,10 +382,12 @@ app.post(`/api/application-update/learn-grades-post`, (req, res) => {
         })
         .catch((err) => console.error(err))
         .then((result) => {
+           // console.log("result after creating subtask: ", result)
           let asanaSubTaskId = result.gid; //this stores the sub task id after it is created above
+          //console.log("asanaSubTaskId ",asanaSubTaskId)
           pool.query(
             format(
-              `UPDATE learn_grades set asanasubtaskid = ${asanaSubTaskId} where assessment_id = ${student.assessment_id} AND assessment_grade = ${student.assessment_grade}`
+              `UPDATE learn_grades set asanasubtaskid = ${asanaSubTaskId} where assessment_id = ${student.assessment_id} AND student_id = ${student.student_id} AND assessment_grade = ${student.assessment_grade}`
             )
           );
           return { ...student, subTaskId: result.gid }; //returns each student object from body, and adds taskId to that student object
