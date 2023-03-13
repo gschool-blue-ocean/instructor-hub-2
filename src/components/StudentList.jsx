@@ -11,7 +11,7 @@ import { StudentInfoModal } from "./StudentInfoModal";
 import { AddStudentModal } from "./AddStudentsModal";
 
 export const StudentList = (props) => {
-  const URL = "http://localhost:8000/api";
+  const URL = "/api";
 
   //State courses is set in home
   const { courses, setCourses, isLoadingCourses, setIsLoadingCourses } = props;
@@ -36,12 +36,11 @@ export const StudentList = (props) => {
   // useState for learn grades
   const [learnGrades, setLearnGrades] = useState([]);
 
-  const url = "http://localhost:8000";
 
   //Does a fetch to get the students
   function loadStudents(evt) {
     console.log(evt);
-    fetch(`${URL}/students/${evt}`)
+    fetch(`/students/${evt}`)
       .then((result) => result.json())
       .then((data) => setStudents(data));
     console.log(students);
@@ -55,7 +54,7 @@ export const StudentList = (props) => {
     } else {
       currentClass = sessionStorage.getItem("defaultCohort");
     }
-    fetch(`http://localhost:8000/api/students/${currentClass}`)
+    fetch(`/api/students/${currentClass}`)
       .then((result) => result.json())
       .then((data) => {
         setStudents(data);
@@ -75,13 +74,13 @@ export const StudentList = (props) => {
 
   //Does a fetch when student is clicked to get their grades from projects
   function getGrades(id) {
-    fetch(`${url}/api/student/scores/${id}`)
+    fetch(`/api/student/scores/${id}`)
       .then((result) => result.json())
       .then((data) => setGrades(data));
   }
   //Does a fetch when student is clicked to get their grades from learn content
   function getLearnGrades(id) {
-    fetch(`${url}/api/student/learn/scores/${id}`)
+    fetch(`/api/student/learn/scores/${id}`)
       .then((result) => result.json())
       .then((data) => setLearnGrades(data));
   }

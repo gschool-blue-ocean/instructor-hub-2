@@ -17,7 +17,7 @@ export const CreateCohortModal = () => {
   // extracted dbCohorts function from cohortContext, using useContext. 
   const { dbCohorts } = useContext(CohortContext)
   // backend url
-  const url = "http://localhost:8000";
+
 
   // state for CreateCohort Modal displaying/not displaying
   const [showCreateCohortModal, setShowCreateCohortModal] = useState(false);
@@ -41,7 +41,7 @@ export const CreateCohortModal = () => {
   const cohortNameRef = useRef();
 
   let createCohort = () => {
-    fetch(`${url}/api/create/cohort`, {
+    fetch(`/api/create/cohort`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -8,7 +8,6 @@ import swal from 'sweetalert';
 export const ProjectModal = (props) => {
 
   const { courses, setCourses, checked, setChecked, selectedStudents, setSelectedStudents } = props
-  const URL = 'http://localhost:8000'
 
   // state for project modal displaying/not displaying
   const [showProjectModal, setShowProjectModal] = useState(false);
@@ -56,7 +55,7 @@ export const ProjectModal = (props) => {
 
   // open project modal function
   const handleShowProjectModal = () => {
-    fetch(`${URL}/api/projects/project-names`)
+    fetch(`/api/projects/project-names`)
       .then(res => res.json())
       .then(data => {
         setAllProjectNames(data)
@@ -102,8 +101,8 @@ export const ProjectModal = (props) => {
     location.reload();
     //filters all of the values that are already in the database
     let filteredStudentsWhoAlreadyHaveGrades = selectedStudents.filter(student => {
-      for(let i = 0; i < currentProjectGrades.length; i++){
-        if(currentProjectGrades[i].student_id == student.student_id && currentProjectGrades[i].project_id == currentSelectedProjectID){
+      for (let i = 0; i < currentProjectGrades.length; i++) {
+        if (currentProjectGrades[i].student_id == student.student_id && currentProjectGrades[i].project_id == currentSelectedProjectID) {
           return true;
         }
       }
@@ -112,17 +111,17 @@ export const ProjectModal = (props) => {
 
     //filters all of the values that are not already in the database
     let filteredStudentsWhoDoNotAlreadyHaveGrades = selectedStudents.filter(student => {
-      for(let i = 0; i < currentProjectGrades.length; i++){
-        if(currentProjectGrades[i].student_id == student.student_id && currentProjectGrades[i].project_id == currentSelectedProjectID){
+      for (let i = 0; i < currentProjectGrades.length; i++) {
+        if (currentProjectGrades[i].student_id == student.student_id && currentProjectGrades[i].project_id == currentSelectedProjectID) {
           return false;
         }
       }
       return true;
     })
 
-// sends a fetch call to post learn grades for all selected students who do not already have grades in the database
+    // sends a fetch call to post learn grades for all selected students who do not already have grades in the database
     // this will only fire the fetch call if the filteredStudentsWhoDoNotAlreadyHaveGrades variable has a value in it
-    if(filteredStudentsWhoDoNotAlreadyHaveGrades.length > 0){
+    if (filteredStudentsWhoDoNotAlreadyHaveGrades.length > 0) {
       fetch(`${URL}/api/application-update/project-grades-post`, {
         method: 'POST',
         headers: {
@@ -136,18 +135,18 @@ export const ProjectModal = (props) => {
           }))
         })
       })
-      .then(result => result.json())
-      .then(data => {
-        swal("project grades posted successfully")        
-      })
-      .catch(error => {
-        console.log(error)
-      })
+        .then(result => result.json())
+        .then(data => {
+          swal("project grades posted successfully")
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
 
     // sends a fetch call to update learn grades for all selected students who already have grades in the database
     // this will only fire the fetch call if the filteredStudentsWhoAlreadyHaveGrades variable has a value in it
-    if(filteredStudentsWhoAlreadyHaveGrades.length > 0){
+    if (filteredStudentsWhoAlreadyHaveGrades.length > 0) {
       fetch(`${URL}/api/application-update/project-grades-update`, {
         method: 'POST',
         headers: {
@@ -161,15 +160,15 @@ export const ProjectModal = (props) => {
           }))
         }),
       })
-      .then(result => result.json())
-      .then(data => {
-        swal("project grades posted successfully")        
-      })
-      .catch(error => {
-        console.log(error)
-      })
+        .then(result => result.json())
+        .then(data => {
+          swal("project grades posted successfully")
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
-    
+
     handleCloseProjectGradingModal()
   }
 

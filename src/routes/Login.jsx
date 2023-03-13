@@ -16,8 +16,6 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 
 export const Login = (props) => {
-
-  // const URL = 'http://localhost:8000/api'
   const URL = '/api'
 
   const { isLoggedIn, setIsLoggedIn } = props

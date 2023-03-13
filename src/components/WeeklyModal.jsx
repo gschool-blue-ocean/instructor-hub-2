@@ -70,7 +70,7 @@ export const WeeklyModal = (props) => {
   const handleSubmitButton = () => {
     location.reload();
     //sends a fetch call to update tech skills for all selected students
-    fetch(`http://localhost:8000/api/weekly-update/tech-skills`, {
+    fetch(`/api/weekly-update/tech-skills`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -91,7 +91,7 @@ export const WeeklyModal = (props) => {
       })
 
     //sends a fetch call to update tech skills for all selected students
-    fetch(`http://localhost:8000/api/weekly-update/teamwork-skills`, {
+    fetch(`/api/weekly-update/teamwork-skills`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -112,7 +112,7 @@ export const WeeklyModal = (props) => {
       })
 
     //sends a fetch call to update weekly notes for all selected students
-    fetch(`http://localhost:8000/api/weekly-update/notes`, {
+    fetch(`/api/weekly-update/notes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

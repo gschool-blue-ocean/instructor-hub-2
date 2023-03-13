@@ -12,7 +12,6 @@ import Groups from "../components/Groups";
 export const CohortContext = createContext();
 
 export const Home = (props) => {
-  // const URL = "http://localhost:8000/api";
   const URL = "/api";
   const { isLoggedIn, setIsLoggedIn } = props;
 
