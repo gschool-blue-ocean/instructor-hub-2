@@ -8,8 +8,6 @@ import swal from "sweetalert";
 import Form from "react-bootstrap/Form";
 
 export const AddStudentModal = () => {
-  const URL = "http://localhost:8000";
-
   const [students, setStudents] = useState([]);
 
   //Handles the opening and closing of the modal to add students
@@ -32,7 +30,9 @@ export const AddStudentModal = () => {
     // } else {
     //   cohort = sessionStorage.getItem("defaultCohort");
     // }
-    let cohort = sessionStorage.getItem("currentClass") || sessionStorage.getItem("defaultCohort");
+    let cohort =
+      sessionStorage.getItem("currentClass") ||
+      sessionStorage.getItem("defaultCohort");
     let firstName = firstNameRef.current.value;
     let lastName = lastNameRef.current.value;
     let githubUser = githubUserRef.current.value;
@@ -48,7 +48,7 @@ export const AddStudentModal = () => {
     } else {
       //Sends the student array, it is an array of objects
       //The route is set up to handle the array and do a mass query
-      fetch(`${URL}/api/create/students`, {
+      fetch(`/api/create/students`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -108,7 +108,13 @@ export const AddStudentModal = () => {
         Add Students
       </Button>
 
-      <Modal id="add-student-modal" size="md" centered show={showModal} onHide={closeModal}>
+      <Modal
+        id="add-student-modal"
+        size="md"
+        centered
+        show={showModal}
+        onHide={closeModal}
+      >
         <Modal.Header closeButton>
           <Modal.Title>
             Add Students -{" "}
