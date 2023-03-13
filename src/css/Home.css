@@ -323,3 +323,32 @@ button#copy-groups-btn {
 #groups-table th {
   background-color: #d2d2d2;
 }
+
+/* Projects route styling */
+#projects-container {
+  border: 1px solid black;
+  box-shadow: 10px 10px;
+  border-radius: 20px;
+  margin: 20px 0 20px 0;
+  padding: 50px;
+}
+
+#projects-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+#selection-container {
+  display: flex;
+  gap: 30px;
+  margin: 20px 0 20px 0;
+}
+
+.list {
+  display: flex;
+  gap: 8px;
+}
+
+li {
+  list-style-type: none;
+}
