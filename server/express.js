@@ -511,11 +511,6 @@ app.post("/api/create/students", (req, res) => {
           return { ...student, taskId: result.gid }; //returns each student object from body, and adds taskId to that student object
         })
         .catch((err) => console.error(err));
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 787478c (commit3)
     }))
     .then((students)=> {
         const values = students.map((student)=>{
@@ -526,10 +521,6 @@ app.post("/api/create/students", (req, res) => {
             res.send(result.rows)
         })
         .catch(error => res.send(error))
-<<<<<<< HEAD
->>>>>>> 53f7141 (commiting)
-=======
->>>>>>> 787478c (commit3)
     })
 });
 
