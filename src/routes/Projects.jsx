@@ -108,19 +108,6 @@ const Projects = (props) => {
 
   // submit the data to the database
   const handleSubmitButton = () => {
-    //filters all of the values that are already in the database
-    let filteredStudentsWhoAlreadyHaveGrades = selectedStudents.filter((student) => {
-      for (let i = 0; i < currentProjectGrades.length; i++) {
-        if (
-          currentProjectGrades[i].student_id == student.student_id &&
-          currentProjectGrades[i].project_id == currentSelectedProjectID
-        ) {
-          return true;
-        }
-      }
-      return false;
-    });
-
     //filters all of the values that are not already in the database
     let filteredStudentsWhoDoNotAlreadyHaveGrades = selectedStudents.filter((student) => {
       for (let i = 0; i < currentProjectGrades.length; i++) {
@@ -133,11 +120,8 @@ const Projects = (props) => {
       }
       return true;
     });
-
-    // sends a fetch call to post learn grades for all selected students who do not already have grades in the database
     // sends a fetch call to post learn grades for all selected students who do not already have grades in the database
     // this will only fire the fetch call if the filteredStudentsWhoDoNotAlreadyHaveGrades variable has a value in it
-    if (filteredStudentsWhoDoNotAlreadyHaveGrades.length > 0) {
     if (filteredStudentsWhoDoNotAlreadyHaveGrades.length > 0) {
       fetch(`${URL}/application-update/project-grades-post`, {
         method: "POST",
@@ -160,33 +144,6 @@ const Projects = (props) => {
           console.log(error);
         });
     }
-
-    // sends a fetch call to update learn grades for all selected students who already have grades in the database
-    // this will only fire the fetch call if the filteredStudentsWhoAlreadyHaveGrades variable has a value in it
-    if (filteredStudentsWhoAlreadyHaveGrades.length > 0) {
-    if (filteredStudentsWhoAlreadyHaveGrades.length > 0) {
-      fetch(`${URL}/application-update/project-grades-update`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          students: filteredStudentsWhoAlreadyHaveGrades.map((student) => ({
-            student_id: student.student_id,
-            project_id: currentSelectedProjectID,
-            project_passed: student.projectGrade === "Pass" ? true : false,
-          })),
-        }),
-      })
-        .then((result) => result.json())
-        .then((data) => {
-          swal("project grades posted successfully");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-
     handleCloseProjectGradingModal();
   };
 
@@ -465,7 +422,7 @@ const Projects = (props) => {
         </div>
       </div>
     </div>
-  );
+  )
 };
 
 export default Projects;
