@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {Navigate} from 'react-router-dom';
 import  Modal  from 'react-bootstrap/Modal';
 import { ModalList } from '/components/ModalList';
 import Button from 'react-bootstrap/Button';
@@ -7,8 +6,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { LoadingDropdown } from '../components/Loading';
 import Table from 'react-bootstrap/Table';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Badge from 'react-bootstrap/Badge';
 
 
 
