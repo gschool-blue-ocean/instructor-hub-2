@@ -104,8 +104,12 @@ export const AddStudentModal = () => {
   return (
     <>
       <Button id="add-student-btn" onClick={() => openModal()}>
+<<<<<<< HEAD
         <AiOutlineUserAdd size={20} />
         Add Students
+=======
+        <AiOutlineUserAdd size={20} />Add Students
+>>>>>>> 53f7141 (commiting)
       </Button>
 
       <Modal id="add-student-modal" size="md" centered show={showModal} onHide={closeModal}>

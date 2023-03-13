@@ -12,7 +12,7 @@ import {
 import { LoadingDropdown } from "./Loading";
 
 export const Header = (props) => {
-  const URL = "http://localhost:8000/api";
+  const URL = "/api";
   const { courses, isLoadingCourses, isLoggedIn, setIsLoggedIn } = props;
   const [selectedClass, setSelectedClass] = useState("Cohorts");
   const [students, setStudents] = useState([]);

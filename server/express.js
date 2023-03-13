@@ -309,7 +309,6 @@ app.post(`/api/weekly-update/tech-skills`, (req, res) => {
 //Route that updates the notes table with the weekly notes for a group of students
 
 // needs student_id, notes, name from body
-//http://localhost:8000/api/weekly-update/notes
 // app.post(`/api/weekly-update/notes`, (req, res) => {
 //     const students = req.body
 //     // let record_date = new Date().toISOString()
@@ -354,14 +353,7 @@ app.post(`/api/application-update/learn-grades-post`, (req, res) => {
   });
   Promise.all(
     students.map((student) => {
-      pool
-        .query(
-          format(
-            "INSERT INTO learn_grades (student_id, assessment_id, assessment_grade) VALUES %L ON CONFLICT (student_id, assessment_id) DO UPDATE SET assessment_grade = excluded.assessment_grade",
-            values
-          ),
-          []
-        )
+      pool.query(format("INSERT INTO learn_grades (student_id, assessment_id, assessment_grade) VALUES %L ON CONFLICT (student_id, assessment_id) DO UPDATE SET assessment_grade = excluded.assessment_grade", values),[])
         .then((result) => {
           res.status(200).send(result.rows);
         })
@@ -380,6 +372,7 @@ app.post(`/api/application-update/learn-grades-post`, (req, res) => {
         .catch((err) => console.error(err))
         .then((result) => {
           let lastElement = result.rows.length - 1;
+          console.log("assessment_name ",result.rows[lastElement].assessment_name)
           //Create a sub task in Asana in this format: Assessment Name: Assessment Grade
           return client.tasks.createSubtaskForTask(result.rows[lastElement].asana_task_id, {
             name: `${result.rows[lastElement].assessment_name}: ${student.assessment_grade}`,
@@ -388,10 +381,12 @@ app.post(`/api/application-update/learn-grades-post`, (req, res) => {
         })
         .catch((err) => console.error(err))
         .then((result) => {
+           // console.log("result after creating subtask: ", result)
           let asanaSubTaskId = result.gid; //this stores the sub task id after it is created above
+          //console.log("asanaSubTaskId ",asanaSubTaskId)
           pool.query(
             format(
-              `UPDATE learn_grades set asanasubtaskid = ${asanaSubTaskId} where assessment_id = ${student.assessment_id} AND assessment_grade = ${student.assessment_grade}`
+              `UPDATE learn_grades set asanasubtaskid = ${asanaSubTaskId} where assessment_id = ${student.assessment_id} AND student_id = ${student.student_id} AND assessment_grade = ${student.assessment_grade}`
             )
           );
           return { ...student, subTaskId: result.gid }; //returns each student object from body, and adds taskId to that student object
@@ -516,27 +511,26 @@ app.post("/api/create/students", (req, res) => {
           return { ...student, taskId: result.gid }; //returns each student object from body, and adds taskId to that student object
         })
         .catch((err) => console.error(err));
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 787478c (commit3)
+    }))
+    .then((students)=> {
+        const values = students.map((student)=>{
+            return [student.name, student.cohort_name, student.github, student.taskId];
+        })
+        pool.query(format('INSERT INTO students (name, cohort_name, github, asana_task_id) VALUES %L RETURNING *', values), [])
+        .then((result) => {
+            res.send(result.rows)
+        })
+        .catch(error => res.send(error))
+<<<<<<< HEAD
+>>>>>>> 53f7141 (commiting)
+=======
+>>>>>>> 787478c (commit3)
     })
-  )
-    .then((students) => {
-      const values = students.map((student) => {
-        return [student.name, student.cohort_name, student.github, student.taskId];
-      });
-      pool
-        .query(
-          format(
-            "INSERT INTO students (name, cohort_name, github, asana_task_id) VALUES %L RETURNING *",
-            values
-          ),
-          []
-        )
-        .then((result) => res.send(result.rows))
-        .catch((error) => {
-          res.send(error);
-          console.error(error);
-        });
-    })
-    .catch((err) => console.error(err));
 });
 
 app.get("/api/student/scores/:id", (req, res) => {
@@ -578,5 +572,6 @@ app.get("/api/student/learn/scores/:id", (req, res) => {
 });
 
 app.listen(PORT, () => {
+    
   console.log(`Listening on ${PORT}`);
 });
