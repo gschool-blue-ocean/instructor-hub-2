@@ -12,7 +12,8 @@ import Groups from "../components/Groups";
 export const CohortContext = createContext();
 
 export const Home = (props) => {
-  const URL = "http://localhost:8000/api";
+  // const URL = "http://localhost:8000/api";
+  const URL = "/api";
   const { isLoggedIn, setIsLoggedIn } = props;
 
   const [courses, setCourses] = useState([]);
@@ -79,9 +80,9 @@ export const Home = (props) => {
     })
       .then(result => result.json())
       .then(data => {
-        data[0]?.response == 'true' ? 
-        setIsLoggedIn(true) : 
-        setIsLoggedIn(false)
+        data[0]?.response == 'true' ?
+          setIsLoggedIn(true) :
+          setIsLoggedIn(false)
       })
 
   }, [])
@@ -132,7 +133,7 @@ export const Home = (props) => {
               teamworkAvg={teamworkAvg}
               techAvg={techAvg}
             />
-            <Groups students={students} currentCohort={currentCohort}/>
+            <Groups students={students} currentCohort={currentCohort} />
           </div>
         </div>
       </div>
