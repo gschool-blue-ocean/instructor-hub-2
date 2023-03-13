@@ -517,7 +517,10 @@ app.post("/api/create/students", (req, res) => {
         })
         .catch((err) => console.error(err));
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 787478c (commit3)
     }))
     .then((students)=> {
         const values = students.map((student)=>{
@@ -528,28 +531,11 @@ app.post("/api/create/students", (req, res) => {
             res.send(result.rows)
         })
         .catch(error => res.send(error))
+<<<<<<< HEAD
 >>>>>>> 53f7141 (commiting)
+=======
+>>>>>>> 787478c (commit3)
     })
-  )
-    .then((students) => {
-      const values = students.map((student) => {
-        return [student.name, student.cohort_name, student.github, student.taskId];
-      });
-      pool
-        .query(
-          format(
-            "INSERT INTO students (name, cohort_name, github, asana_task_id) VALUES %L RETURNING *",
-            values
-          ),
-          []
-        )
-        .then((result) => res.send(result.rows))
-        .catch((error) => {
-          res.send(error);
-          console.error(error);
-        });
-    })
-    .catch((err) => console.error(err));
 });
 
 app.get("/api/student/scores/:id", (req, res) => {
