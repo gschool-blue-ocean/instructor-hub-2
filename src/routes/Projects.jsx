@@ -10,7 +10,7 @@ import { Header } from "../components/Header";
 import "../css/Home.css";
 
 const Projects = (props) => {
-  const URL = "http://localhost:8000/api";
+  const URL = "/api";
   const { isLoggedIn, setIsLoggedIn } = props;
   // state for selecting students in order to update their grade
   const [checked, setChecked] = useState(false);
@@ -64,6 +64,7 @@ const Projects = (props) => {
     );
   };
 
+  /////////////////// PROJECT MODAL OPEN AND CLOSE FUNCTIONS ///////////////////
   /////////////////// PROJECT MODAL OPEN AND CLOSE FUNCTIONS ///////////////////
   // close project modal function
   const handleCloseProjectModal = () => {
@@ -134,7 +135,9 @@ const Projects = (props) => {
     });
 
     // sends a fetch call to post learn grades for all selected students who do not already have grades in the database
+    // sends a fetch call to post learn grades for all selected students who do not already have grades in the database
     // this will only fire the fetch call if the filteredStudentsWhoDoNotAlreadyHaveGrades variable has a value in it
+    if (filteredStudentsWhoDoNotAlreadyHaveGrades.length > 0) {
     if (filteredStudentsWhoDoNotAlreadyHaveGrades.length > 0) {
       fetch(`${URL}/application-update/project-grades-post`, {
         method: "POST",
@@ -160,6 +163,7 @@ const Projects = (props) => {
 
     // sends a fetch call to update learn grades for all selected students who already have grades in the database
     // this will only fire the fetch call if the filteredStudentsWhoAlreadyHaveGrades variable has a value in it
+    if (filteredStudentsWhoAlreadyHaveGrades.length > 0) {
     if (filteredStudentsWhoAlreadyHaveGrades.length > 0) {
       fetch(`${URL}/application-update/project-grades-update`, {
         method: "POST",

@@ -3,7 +3,7 @@ import { GenerateGroupsModal } from "./GenerateGroupsModal";
 import Table from "react-bootstrap/Table";
 
 const Groups = ({ students, currentCohort }) => {
-  const URL = "http://localhost:8000/api";
+  const URL = "/api";
   const [groups, setGroups] = useState([]);
   const [groupIds, setGroupIds] = useState([]);
 
