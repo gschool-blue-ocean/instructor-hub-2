@@ -29,7 +29,7 @@ export const GenerateGroupsModal = ({ students }) => {
   // useRef for number of groups
   const numOfGroupRef = useRef();
 
-  const URL = "http://localhost:8000/api";
+  const URL = "/api";
 
   // splits students into the given amount of groups and assigns them to the groups useState
   const groups = [];

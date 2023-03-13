@@ -8,7 +8,7 @@ import swal from 'sweetalert';
 
 export const AssessmentModal = (props) => {
   const { courses, setCourses, checked, setChecked, selectedStudents, setSelectedStudents } = props
-  const URL = 'http://localhost:8000'
+
 
   // state for assessment modal displaying/not displaying
   const [showAssessmentModal, setShowAssessmentModal] = useState(false);
@@ -56,7 +56,7 @@ export const AssessmentModal = (props) => {
 
   // open assessment modal function
   const handleShowAssessmentModal = () => {
-    fetch(`${URL}/api/learn/assessment-names`)
+    fetch(`/api/learn/assessment-names`)
       .then(res => res.json())
       .then(data => {
         setAllAssessmentNames(data)
@@ -102,8 +102,8 @@ export const AssessmentModal = (props) => {
     location.reload()
     //filters all of the values that are already in the database
     let filteredStudentsWhoAlreadyHaveGrades = selectedStudents.filter(student => {
-      for(let i = 0; i < currentLearnGrades.length; i++){
-        if(currentLearnGrades[i].student_id == student.student_id && currentLearnGrades[i].assessment_id == currentSelectedAssessmentID){
+      for (let i = 0; i < currentLearnGrades.length; i++) {
+        if (currentLearnGrades[i].student_id == student.student_id && currentLearnGrades[i].assessment_id == currentSelectedAssessmentID) {
           return true;
         }
       }
@@ -112,8 +112,8 @@ export const AssessmentModal = (props) => {
 
     //filters all of the values that are not already in the database
     let filteredStudentsWhoDoNotAlreadyHaveGrades = selectedStudents.filter(student => {
-      for(let i = 0; i < currentLearnGrades.length; i++){
-        if(currentLearnGrades[i].student_id == student.student_id && currentLearnGrades[i].assessment_id == currentSelectedAssessmentID){
+      for (let i = 0; i < currentLearnGrades.length; i++) {
+        if (currentLearnGrades[i].student_id == student.student_id && currentLearnGrades[i].assessment_id == currentSelectedAssessmentID) {
           return false;
         }
       }
@@ -122,7 +122,7 @@ export const AssessmentModal = (props) => {
 
     // sends a fetch call to post learn grades for all selected students who do not already have grades in the database
     // this will only fire the fetch call if the filteredStudentsWhoDoNotAlreadyHaveGrades variable has a value in it
-    if(filteredStudentsWhoDoNotAlreadyHaveGrades.length > 0){
+    if (filteredStudentsWhoDoNotAlreadyHaveGrades.length > 0) {
       fetch(`${URL}/api/application-update/learn-grades-post`, {
         method: 'POST',
         headers: {
@@ -136,18 +136,18 @@ export const AssessmentModal = (props) => {
           }))
         })
       })
-      .then(result => result.json())
-      .then(data => {
-        swal("learn grades posted successfully")        
-      })
-      .catch(error => {
-        console.log(error)
-      })
+        .then(result => result.json())
+        .then(data => {
+          swal("learn grades posted successfully")
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
 
     // sends a fetch call to update learn grades for all selected students who already have grades in the database
     // this will only fire the fetch call if the filteredStudentsWhoAlreadyHaveGrades variable has a value in it
-    if(filteredStudentsWhoAlreadyHaveGrades.length > 0){
+    if (filteredStudentsWhoAlreadyHaveGrades.length > 0) {
       fetch(`${URL}/api/application-update/learn-grades-update`, {
         method: 'POST',
         headers: {
@@ -161,15 +161,15 @@ export const AssessmentModal = (props) => {
           }))
         }),
       })
-      .then(result => result.json())
-      .then(data => {
-        swal("learn grades posted successfully")        
-      })
-      .catch(error => {
-        console.log(error)
-      })
+        .then(result => result.json())
+        .then(data => {
+          swal("learn grades posted successfully")
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
-    
+
     handleCloseAssessmentGradingModal()
   }
 
@@ -194,7 +194,7 @@ export const AssessmentModal = (props) => {
           <select id="assessment-selector" name="assessments" onChange={(e) => handleSelectAssessment(e)}>
             <option value="placeholder">{currentSelectedAssessmentName === "" ? "-- Select Assessment --" : currentSelectedAssessmentName}</option>
             {allAssessmentNames.map(names => {
-              if(currentSelectedAssessmentName === names.assessment_name){
+              if (currentSelectedAssessmentName === names.assessment_name) {
                 return
               }
               return <option key={names.assessment_id} value={names.assessment_name}>{names.assessment_name}</option>

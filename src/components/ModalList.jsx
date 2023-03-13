@@ -9,7 +9,7 @@ export const ModalList = (props) => {
     let currentClass = sessionStorage.getItem('currentClass')
     let gid = sessionStorage.getItem(currentClass)
     useEffect(() => {
-        fetch(`http://localhost:8000/api/students/${currentClass}`)
+        fetch(`/api/students/${currentClass}`)
             .then(result => result.json())
             .then(data => {
                 setStudentsState(data)
@@ -56,32 +56,32 @@ export const ModalList = (props) => {
             {/* Checks to see if the students are present in selectedStudent state
             if they are it keeps the check in the box even if modal is closed */}
             <ul id="project-student-list">
-            {studentsState
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map((student) => {
-                    return (
-                        selectedStudents.find((selected) => selected.student_id === student.student_id) ?
-                            <li key={student.student_id}>
-                                <input
-                                    type="checkbox"
-                                    value={student.name}
-                                    onChange={(e) => clickStudent(e)}
-                                    id={student.student_id}
-                                />
-                                {student.name}
-                            </li>
-                            :
-                            <li key={student.student_id}>
-                                <input
-                                    type="checkbox"
-                                    value={student.name}
-                                    onChange={(e) => clickStudent(e)}
-                                    id={student.student_id}
-                                />
-                                {student.name}
-                            </li>
-                    );
-                })}
+                {studentsState
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((student) => {
+                        return (
+                            selectedStudents.find((selected) => selected.student_id === student.student_id) ?
+                                <li key={student.student_id}>
+                                    <input
+                                        type="checkbox"
+                                        value={student.name}
+                                        onChange={(e) => clickStudent(e)}
+                                        id={student.student_id}
+                                    />
+                                    {student.name}
+                                </li>
+                                :
+                                <li key={student.student_id}>
+                                    <input
+                                        type="checkbox"
+                                        value={student.name}
+                                        onChange={(e) => clickStudent(e)}
+                                        id={student.student_id}
+                                    />
+                                    {student.name}
+                                </li>
+                        );
+                    })}
             </ul>
         </>
     )

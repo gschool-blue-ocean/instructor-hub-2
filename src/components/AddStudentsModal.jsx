@@ -152,7 +152,6 @@ export const AddStudentModal = () => {
             variant="primary"
             onClick={() => {
               submitStudents();
-              // location.reload();
             }}
           >
             Submit

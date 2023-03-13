@@ -11,7 +11,7 @@ import { CreateCohortModal } from "./CreateCohortModal";
 // import { AddStudentModal } from "./AddStudentsModal";
 
 export const AdminMenu = (props) => {
-  const URL = "http://localhost:8000/api";
+  const URL = "/api";
   const { courses, isLoadingCourses, isLoggedIn, setIsLoggedIn } = props;
 
   let user = sessionStorage.getItem("username");
