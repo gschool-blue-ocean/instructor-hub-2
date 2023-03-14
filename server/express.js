@@ -354,9 +354,9 @@ app.post(`/api/application-update/learn-grades-post`, (req, res) => {
   Promise.all(
     students.map((student) => {
       pool.query(format("INSERT INTO learn_grades (student_id, assessment_id, assessment_grade) VALUES %L ON CONFLICT (student_id, assessment_id) DO UPDATE SET assessment_grade = excluded.assessment_grade", values),[])
-        .then((result) => {
-          res.status(200).send(result.rows);
-        })
+        // .then((result) => {
+        //   //res.status(200).send(result.rows);
+        // })
         .catch((err) => console.error(err))
         .then(() => {
           //after new record is inserted in the db, we need asana task id and assessment name to create a sub task
@@ -372,7 +372,7 @@ app.post(`/api/application-update/learn-grades-post`, (req, res) => {
         .catch((err) => console.error(err))
         .then((result) => {
           let lastElement = result.rows.length - 1;
-          console.log("assessment_name ",result.rows[lastElement].assessment_name)
+          //console.log("assessment_name ",result.rows[lastElement].assessment_name)
           //Create a sub task in Asana in this format: Assessment Name: Assessment Grade
           return client.tasks.createSubtaskForTask(result.rows[lastElement].asana_task_id, {
             name: `${result.rows[lastElement].assessment_name}: ${student.assessment_grade}`,
@@ -397,6 +397,7 @@ app.post(`/api/application-update/learn-grades-post`, (req, res) => {
 
 //Route updates the learn_grades table with the assessment grades for a group of students
 app.post(`/api/application-update/learn-grades-update`, (req, res) => {
+  //console.log("grades added");
   const students = req.body.students;
   let values = [];
   students.forEach((student) => {
