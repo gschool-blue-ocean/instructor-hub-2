@@ -74,7 +74,7 @@ export const ProjectModal = (props) => {
 
   // open Project grading modal function
   const handleShowProjectGradingModal = () => {
-    fetch(`${URL}/api/project-grades`)
+    fetch(`/api/project-grades`)
       .then(res => res.json())
       .then(data => {
         setCurrentProjectGrades(data)
@@ -122,7 +122,7 @@ export const ProjectModal = (props) => {
     // sends a fetch call to post learn grades for all selected students who do not already have grades in the database
     // this will only fire the fetch call if the filteredStudentsWhoDoNotAlreadyHaveGrades variable has a value in it
     if (filteredStudentsWhoDoNotAlreadyHaveGrades.length > 0) {
-      fetch(`${URL}/api/application-update/project-grades-post`, {
+      fetch(`/api/application-update/project-grades-post`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -147,7 +147,7 @@ export const ProjectModal = (props) => {
     // sends a fetch call to update learn grades for all selected students who already have grades in the database
     // this will only fire the fetch call if the filteredStudentsWhoAlreadyHaveGrades variable has a value in it
     if (filteredStudentsWhoAlreadyHaveGrades.length > 0) {
-      fetch(`${URL}/api/application-update/project-grades-update`, {
+      fetch(`/api/application-update/project-grades-update`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

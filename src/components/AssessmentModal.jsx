@@ -75,7 +75,7 @@ export const AssessmentModal = (props) => {
 
   // open assessment grading modal function
   const handleShowAssessmentGradingModal = () => {
-    fetch(`${URL}/api/learn-grades`)
+    fetch(`/api/learn-grades`)
       .then(res => res.json())
       .then(data => {
         setCurrentLearnGrades(data)
@@ -123,7 +123,7 @@ export const AssessmentModal = (props) => {
     // sends a fetch call to post learn grades for all selected students who do not already have grades in the database
     // this will only fire the fetch call if the filteredStudentsWhoDoNotAlreadyHaveGrades variable has a value in it
     if (filteredStudentsWhoDoNotAlreadyHaveGrades.length > 0) {
-      fetch(`${URL}/api/application-update/learn-grades-post`, {
+      fetch(`/api/application-update/learn-grades-post`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -148,7 +148,7 @@ export const AssessmentModal = (props) => {
     // sends a fetch call to update learn grades for all selected students who already have grades in the database
     // this will only fire the fetch call if the filteredStudentsWhoAlreadyHaveGrades variable has a value in it
     if (filteredStudentsWhoAlreadyHaveGrades.length > 0) {
-      fetch(`${URL}/api/application-update/learn-grades-update`, {
+      fetch(`/api/application-update/learn-grades-update`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
